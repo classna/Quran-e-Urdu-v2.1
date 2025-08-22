@@ -111,7 +111,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":60,"name":"سُورَةُ ٱلْمُمْتَحَنَةِ","englishName":"Al-Mumtahana","englishNameTranslation":"She that is to be examined","numberOfAyahs":13,"revelationType":"Medinan"},
     {"number":61,"name":"سُورَةُ ٱلصَّفِّ","englishName":"As-Saff","englishNameTranslation":"The Ranks","numberOfAyahs":14,"revelationType":"Medinan"},
     {"number":62,"name":"سُورَةُ ٱلْجُمُعَةِ","englishName":"Al-Jumu'a","englishNameTranslation":"The Congregation, Friday","numberOfAyahs":11,"revelationType":"Medinan"},
-    {"number":63,"name":"سُورَةُ ٱلْمُنَافِقُونَ","englishName":"Al-Munaafiqoon","englishNameTranslation":"The Hypocrites","numberOfAyahs":11,"revelationType":"Medinan"},
+    {"number":63,"name":"سُورَةُ ٱلْْمُنَافِقُونَ","englishName":"Al-Munaafiqoon","englishNameTranslation":"The Hypocrites","numberOfAyahs":11,"revelationType":"Medinan"},
     {"number":64,"name":"سُورَةُ ٱلتَّغَابُنِ","englishName":"At-Taghaabun","englishNameTranslation":"The Mutual Disillusion","numberOfAyahs":18,"revelationType":"Medinan"},
     {"number":65,"name":"سُورَةُ ٱلطَّلَاقِ","englishName":"At-Talaaq","englishNameTranslation":"The Divorce","numberOfAyahs":12,"revelationType":"Medinan"},
     {"number":66,"name":"سُورَةُ ٱلتَّحْرِيمِ","englishName":"At-Tahrim","englishNameTranslation":"The Prohibition","numberOfAyahs":12,"revelationType":"Medinan"},
@@ -122,7 +122,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":71,"name":"سُورَةُ نُوحٍ","englishName":"Nooh","englishNameTranslation":"Noah","numberOfAyahs":28,"revelationType":"Meccan"},
     {"number":72,"name":"سُورَةُ ٱلْجِنِّ","englishName":"Al-Jinn","englishNameTranslation":"The Jinn","numberOfAyahs":28,"revelationType":"Meccan"},
     {"number":73,"name":"سُورَةُ ٱلْمُزَّمِّلِ","englishName":"Al-Muzzammil","englishNameTranslation":"The Enshrouded One","numberOfAyahs":20,"revelationType":"Meccan"},
-    {"number":74,"name":"سُورَةُ ٱلْمُدَّثِّرِ","englishName":"Al-Muddaththir","englishNameTranslation":"The Cloaked One","numberOfAyahs":56,"revelationType":"Meccan"},
+    {"number":74,"name":"سُورَةُ ٱلْْمُدَّثِّرِ","englishName":"Al-Muddaththir","englishNameTranslation":"The Cloaked One","numberOfAyahs":56,"revelationType":"Meccan"},
     {"number":75,"name":"سُورَةُ ٱلْقِيَامَةِ","englishName":"Al-Qiyaama","englishNameTranslation":"The Resurrection","numberOfAyahs":40,"revelationType":"Meccan"},
     {"number":76,"name":"سُورَةُ ٱلْإِنْسَانِ","englishName":"Al-Insaan","englishNameTranslation":"Man","numberOfAyahs":31,"revelationType":"Medinan"},
     {"number":77,"name":"سُورَةُ ٱلْمُرْسَلَاتِ","englishName":"Al-Mursalaat","englishNameTranslation":"The Emissaries","numberOfAyahs":50,"revelationType":"Meccan"},
@@ -365,7 +365,7 @@ const VerseCard = ({ verse, settings, onPlay, onBookmark, isBookmarked, isPlayin
     }
 
     return (
-      <div className={`p-4 rounded-2xl transition-all duration-300 ${isHighlighted ? 'bg-[color-mix(in_srgb,_var(--color-primary)_8%,_transparent)] ring-2 ring-[var(--color-primary)]' : ''}`}>
+      <div className={`p-4 rounded-2xl transition-all duration-300 ${isHighlighted ? 'bg-[color-mix(in_srgb,_var(--color-primary)_8%,_transparent)] ' : ''}`}>
         <div className="flex justify-between items-center mb-4">
           <span className="font-bold text-sm themed-gradient-text">
             {verse.surah.englishName} {verse.numberInSurah}
@@ -383,7 +383,7 @@ const VerseCard = ({ verse, settings, onPlay, onBookmark, isBookmarked, isPlayin
           {verseText.replace(/[\u06dd\u0660-\u0669\s]+$/, '')}
           <AyahEndSymbol number={verse.numberInSurah} />
         </p>
-        <div className={`translation-sub-card mt-4 p-4 rounded-xl transition-all duration-300 ${isTranslationPlaying ? 'ring-2 ring-[var(--color-primary)]' : ''}`}>
+        <div className={`translation-sub-card mt-4 p-4 rounded-xl transition-all duration-300 ${isTranslationPlaying ? '' : ''}`}>
              <p className={`text-[var(--color-text-secondary)] font-${settings.translationFont} translation-text text-right`}>
               {settings.translationLanguage === 'urdu' ? verse.urduTranslation : verse.englishTranslation}
             </p>
@@ -393,21 +393,20 @@ const VerseCard = ({ verse, settings, onPlay, onBookmark, isBookmarked, isPlayin
 };
 
 
-const AudioMiniPlayer = ({ surah, status, onTogglePlay, onNavigate }) => (
-  <div className="fixed bottom-20 left-0 right-0 z-30 p-4 animate-slideInUp" onClick={onNavigate}>
-    <div className="card flex items-center p-3 space-x-3 cursor-pointer">
-      <div className="w-12 h-12 themed-gradient rounded-xl flex items-center justify-center text-white flex-shrink-0">
-        <HeadphonesIcon className="w-6 h-6" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="font-semibold truncate font-poppins">{surah.englishName}</p>
-        <p className="text-sm text-[var(--color-text-secondary)]">
-          {status === 'playing' ? 'Playing...' : 'Paused'}
-        </p>
+const StickyPlayer = ({ surah, status, onTogglePlay, onNavigate, currentVerseInSurah }) => (
+  <div className="p-4 sticky top-16 z-30 animate-fadeInDown">
+    <div onClick={onNavigate} className="card p-4 themed-gradient text-white relative overflow-hidden cursor-pointer flex items-center justify-between">
+      <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/10 rounded-full"></div>
+      <div className="relative z-10 flex-1 min-w-0">
+          <p className="font-semibold text-sm opacity-80 mb-1">NOW PLAYING</p>
+          <h3 className="text-xl font-bold font-poppins truncate">{surah.englishName}</h3>
+          <p className="opacity-90">
+            {currentVerseInSurah ? (status === 'playing' ? `Playing Verse ${currentVerseInSurah}` : `Paused at Verse ${currentVerseInSurah}`) : (status === 'playing' ? 'Playing...' : 'Paused')}
+          </p>
       </div>
       <button
         onClick={(e) => { e.stopPropagation(); onTogglePlay(); }}
-        className="w-12 h-12 rounded-full flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-primary)]"
+        className="w-12 h-12 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white flex-shrink-0 z-10 ml-4 transition-colors"
       >
         {status === 'playing' ? <PauseIcon className="w-6 h-6" /> : <PlayIcon className="w-6 h-6 ml-0.5" />}
       </button>
@@ -447,7 +446,7 @@ const ConfirmationModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
 const HomeScreen = ({ surahs, juzs, settings, onSurahSelect, onJuzSelect, onPlaySurah, playbackState, lastRead, onContinueReading, homeView }) => {
   return (
     <div className="p-4 space-y-6">
-      {lastRead && lastRead.surah && (
+      {lastRead && lastRead.surah && playbackState.status === 'stopped' && (
         <div onClick={onContinueReading} className="card p-6 themed-gradient text-white relative overflow-hidden cursor-pointer animate-scaleIn">
           <div className="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full"></div>
           <div className="relative z-10">
@@ -1295,17 +1294,21 @@ const QuranApp = () => {
             />
         )}
       </Header>
-      <main className="pb-24">
-        {renderContent()}
-      </main>
+
       {isPlayerUiVisible &&
-        <AudioMiniPlayer
+        <StickyPlayer
           surah={playingSurah}
           status={playbackState.status}
           onTogglePlay={() => setPlaybackState(p => ({...p, status: p.status === 'playing' ? 'paused' : 'playing' }))}
           onNavigate={handleNavigateToPlayer}
+          currentVerseInSurah={lastReadWithData?.verseNumberInSurah}
         />
       }
+
+      <main className="pb-24">
+        {renderContent()}
+      </main>
+      
        <ConfirmationModal
         isOpen={showResetConfirmModal}
         title="Reset Settings?"
