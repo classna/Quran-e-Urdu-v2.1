@@ -270,6 +270,8 @@ const DEFAULT_SETTINGS = {
     translationLineHeight: 2.3,
 };
 
+type Settings = typeof DEFAULT_SETTINGS;
+
 // --- HOOKS ---
 const usePersistentState = <T,>(key: string, defaultValue: T): [T, React.Dispatch<React.SetStateAction<T>>] => {
   const [state, setState] = useState<T>(() => {
@@ -356,13 +358,29 @@ const BottomNav = ({ activeTab, setActiveTab }) => {
   );
 };
 
-const VerseCard = ({ verse, settings, onPlay, onBookmark, isBookmarked, isPlaying, isLoading, isHighlighted, isFirstVerse, isTranslationPlaying }) => {
+interface VerseCardProps {
+  verse: Verse;
+  settings: Settings;
+  onPlay: (verse: Verse) => void;
+  onBookmark: (verse: Verse) => void;
+  isBookmarked: boolean;
+  isPlaying: boolean;
+  isLoading: boolean;
+  isHighlighted: boolean;
+  isFirstVerse: boolean;
+  isTranslationPlaying: boolean;
+}
+
+const VerseCard = React.memo(({ verse, settings, onPlay, onBookmark, isBookmarked, isPlaying, isLoading, isHighlighted, isFirstVerse, isTranslationPlaying }: VerseCardProps) => {
     const bismillah = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
     let verseText = verse.text;
 
     if (isFirstVerse && verseText.startsWith(bismillah)) {
         verseText = verseText.substring(bismillah.length).trim();
     }
+
+    const handleBookmark = useCallback(() => onBookmark(verse), [onBookmark, verse]);
+    const handlePlay = useCallback(() => onPlay(verse), [onPlay, verse]);
 
     return (
       <div className={`p-4 rounded-2xl transition-all duration-300 ${isHighlighted ? 'bg-[color-mix(in_srgb,_var(--color-primary)_8%,_transparent)] ' : ''}`}>
@@ -371,10 +389,10 @@ const VerseCard = ({ verse, settings, onPlay, onBookmark, isBookmarked, isPlayin
             {verse.surah.englishName} {verse.numberInSurah}
           </span>
           <div className="flex items-center space-x-2">
-            <button onClick={onBookmark} className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
+            <button onClick={handleBookmark} className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
               {isBookmarked ? <BookmarkFilledIcon className="w-5 h-5 text-[var(--color-primary)]" /> : <BookmarkIcon className="w-5 h-5" />}
             </button>
-            <button onClick={onPlay} className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
+            <button onClick={handlePlay} className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
               {isLoading ? <LoadingSpinnerIcon /> : isPlaying ? <PauseIcon className="w-5 h-5 text-[var(--color-primary)]" /> : <PlayIcon className="w-5 h-5" />}
             </button>
           </div>
@@ -390,7 +408,7 @@ const VerseCard = ({ verse, settings, onPlay, onBookmark, isBookmarked, isPlayin
         </div>
       </div>
     );
-};
+});
 
 
 const StickyPlayer = ({ surah, status, onTogglePlay, onNavigate, currentVerseInSurah }) => (
@@ -505,7 +523,7 @@ const HomeScreen = ({ surahs, juzs, settings, onSurahSelect, onJuzSelect, onPlay
   );
 };
 
-const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmarks, playbackState, verseRefs, scrollToVerse, onScrollComplete, loading }) => {
+const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmarks, playbackState, verseRefs, scrollToVerse, onScrollComplete, loading, playVerseOnLoad, setPlayVerseOnLoad }) => {
     useEffect(() => {
         if (scrollToVerse && verses.length > 0 && !loading) {
             const verseData = verses.find(v => v.number === scrollToVerse);
@@ -520,6 +538,17 @@ const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmar
             }
         }
     }, [scrollToVerse, verses, verseRefs, onScrollComplete, loading]);
+
+    useEffect(() => {
+        if (playVerseOnLoad && verses.length > 0 && !loading) {
+            const verseToPlay = verses.find(v => v.number === playVerseOnLoad);
+            if (verseToPlay) {
+                onPlayVerse(verseToPlay);
+                setPlayVerseOnLoad(null); // Reset the trigger
+            }
+        }
+    }, [playVerseOnLoad, verses, loading, onPlayVerse, setPlayVerseOnLoad]);
+
 
     return (
         <div className="p-4 space-y-4">
@@ -546,8 +575,8 @@ const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmar
                             <VerseCard
                                 verse={verse}
                                 settings={settings}
-                                onPlay={() => onPlayVerse(verse)}
-                                onBookmark={() => onBookmark(verse)}
+                                onPlay={onPlayVerse}
+                                onBookmark={onBookmark}
                                 isBookmarked={bookmarks.some(b => b.id === `${verse.surah.number}-${verse.numberInSurah}`)}
                                 isPlaying={playbackState.currentVerseGlobal === verse.number && playbackState.status === 'playing'}
                                 isLoading={playbackState.loadingVerse === verse.number}
@@ -605,8 +634,8 @@ const JuzScreen = ({ juz, verses, settings, onPlayVerse, onBookmark, bookmarks, 
                             <VerseCard
                                 verse={verse}
                                 settings={settings}
-                                onPlay={() => onPlayVerse(verse)}
-                                onBookmark={() => onBookmark(verse)}
+                                onPlay={onPlayVerse}
+                                onBookmark={onBookmark}
                                 isBookmarked={bookmarks.some(b => b.id === `${verse.surah.number}-${verse.numberInSurah}`)}
                                 isPlaying={playbackState.currentVerseGlobal === verse.number && playbackState.status === 'playing'}
                                 isLoading={playbackState.loadingVerse === verse.number}
@@ -637,7 +666,11 @@ const BookmarksScreen = ({ bookmarks, onBookmarkSelect, settings }) => (
               </div>
               <p className={`font-${settings.arabicFont} text-xl`}>{bookmark.surahName}</p>
             </div>
-            <p className={`mt-3 text-[var(--color-text-secondary)] font-${settings.translationFont} translation-text line-clamp-2 text-right`}>
+            <p dir="rtl" className={`text-right text-[var(--color-text-primary)] font-${settings.arabicFont} arabic-text my-4`}>
+                {bookmark.verseData.text.replace(/[\u06dd\u0660-\u0669\s]+$/, '')}
+                <AyahEndSymbol number={bookmark.verseNumber} />
+            </p>
+            <p className={`text-[var(--color-text-secondary)] font-${settings.translationFont} translation-text line-clamp-3 text-right`}>
               {settings.translationLanguage === 'urdu' ? bookmark.verseData.urduTranslation : bookmark.verseData.englishTranslation}
             </p>
           </div>
@@ -806,8 +839,9 @@ const QuranApp = () => {
   const [loading, setLoading] = useState(false);
   const [scrollToVerse, setScrollToVerse] = useState<number | null>(null);
   const [showResetConfirmModal, setShowResetConfirmModal] = useState(false);
+  const [playVerseOnLoad, setPlayVerseOnLoad] = useState<number | null>(null);
   
-  const [settings, setSettings] = usePersistentState('quranAppSettings', DEFAULT_SETTINGS);
+  const [settings, setSettings] = usePersistentState<Settings>('quranAppSettings', DEFAULT_SETTINGS);
 
   const [bookmarks, setBookmarks] = usePersistentState<Bookmark[]>('quranAppBookmarks', []);
   const [lastRead, setLastRead] = usePersistentState<LastRead | null>('quranAppLastRead', null);
@@ -1171,46 +1205,49 @@ const QuranApp = () => {
     }
   };
 
-  const handlePlaySingleVerse = (verse: Verse) => {
+  const handlePlaySingleVerse = useCallback((verse: Verse) => {
     const verseIndex = verses.findIndex(v => v.number === verse.number);
     if (verseIndex === -1) return;
-    
-    if (playbackState.currentVerseGlobal === verse.number) {
-        // Toggle play/pause for the currently selected verse
-        setPlaybackState(p => ({...p, status: p.status === 'playing' ? 'paused' : 'playing' }));
-    } else {
-        // Set context before playing a new verse
-        if(activeTab === 'surah' && selectedSurah) {
-            setPlaybackContext({ type: 'surah', data: selectedSurah });
-        } else if (activeTab === 'juz' && selectedJuz) {
-            setPlaybackContext({ type: 'juz', data: selectedJuz });
+
+    setPlaybackState(p => {
+        if (p.currentVerseGlobal === verse.number) {
+            // Toggle play/pause for the currently selected verse
+            return { ...p, status: p.status === 'playing' ? 'paused' : 'playing' };
+        } else {
+            // Set context before playing a new verse
+            if (activeTab === 'surah' && selectedSurah) {
+                setPlaybackContext({ type: 'surah', data: selectedSurah });
+            } else if (activeTab === 'juz' && selectedJuz) {
+                setPlaybackContext({ type: 'juz', data: selectedJuz });
+            }
+            
+            return {
+                surahNumber: verse.surah.number,
+                currentVerseIndex: verseIndex,
+                status: 'playing',
+                loadingVerse: null,
+                currentVerseGlobal: verse.number,
+                stage: 'arabic'
+            };
         }
-        
-        setPlaybackState({
-            surahNumber: verse.surah.number,
-            currentVerseIndex: verseIndex,
-            status: 'playing',
-            loadingVerse: null,
-            currentVerseGlobal: verse.number,
-            stage: 'arabic'
-        });
-    }
-  };
+    });
+  }, [verses, activeTab, selectedSurah, selectedJuz]);
   
-  const toggleBookmark = (verse: Verse) => {
+  const toggleBookmark = useCallback((verse: Verse) => {
     const id = `${verse.surah.number}-${verse.numberInSurah}`;
     setBookmarks(prev => 
       prev.some(b => b.id === id) 
       ? prev.filter(b => b.id !== id) 
       : [...prev, { id, surahName: verse.surah.name, surahNumber: verse.surah.number, surahEnglishName: verse.surah.englishName, verseNumber: verse.numberInSurah, verseData: verse }]
     );
-  };
+  }, [setBookmarks]);
   
   const handleBookmarkSelect = (bookmark: Bookmark) => {
     const surah = surahs.find(s => s.number === bookmark.surahNumber);
     if (surah) {
         handleSurahSelect(surah);
         setScrollToVerse(bookmark.verseData.number);
+        setPlayVerseOnLoad(bookmark.verseData.number);
     }
   };
 
@@ -1262,7 +1299,7 @@ const QuranApp = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'home': return <HomeScreen homeView={homeView} surahs={surahs} juzs={juzs} settings={settings} onSurahSelect={handleSurahSelect} onJuzSelect={handleJuzSelect} onPlaySurah={handlePlaySurah} playbackState={playbackState} lastRead={lastReadWithData} onContinueReading={handleContinueReading} />;
-      case 'surah': return selectedSurah ? <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} /> : null;
+      case 'surah': return selectedSurah ? <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} /> : null;
       case 'juz': return selectedJuz ? <JuzScreen loading={loading} juz={selectedJuz} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} /> : null;
       case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} settings={settings} />;
       case 'search': return <SearchScreen />;
