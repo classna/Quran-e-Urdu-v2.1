@@ -652,12 +652,14 @@ const SettingsScreen = ({ settings, onSettingChange, onReset }) => {
           </select>
         </div>
       </div>
-      <button
-        onClick={onReset}
-        className="w-full text-center p-3 rounded-lg font-semibold bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors duration-200"
-      >
-        Reset Settings
-      </button>
+      <div className="card p-6">
+        <button
+          onClick={onReset}
+          className="w-full text-center p-3 rounded-lg font-semibold bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors duration-200"
+        >
+          Reset Settings
+        </button>
+      </div>
     </div>
   );
 };
@@ -696,14 +698,43 @@ const QuranApp = () => {
   const handleSettingChange = useCallback((key, value) => setSettings(p => ({ ...p, [key]: value })), [setSettings]);
 
   const handleConfirmReset = () => {
-    localStorage.removeItem('quranAppSettings');
-    window.location.reload();
+    setSettings(DEFAULT_SETTINGS);
+    setShowResetConfirmModal(false);
   };
 
   // --- Effects ---
   useEffect(() => {
     const loadInitialData = async () => {
         setLoading(true);
+
+        // 1. Try loading from cache
+        try {
+          const cachedSurahs = localStorage.getItem('quranAppSurahs');
+          if (cachedSurahs) {
+            const parsedSurahs = JSON.parse(cachedSurahs);
+            if (Array.isArray(parsedSurahs) && parsedSurahs.length > 0) {
+                setSurahs(parsedSurahs);
+                const juzArray = VERIFIED_JUZ_STARTS.map((start, index) => {
+                  const surahInfo = parsedSurahs.find(s => s.number === start.surah);
+                  return {
+                    number: index + 1,
+                    surah: start.surah,
+                    ayah: start.ayah,
+                    startSurahName: surahInfo ? surahInfo.englishName : '',
+                    startSurahNameArabic: surahInfo ? surahInfo.name : '',
+                  };
+                });
+                setJuzs(juzArray);
+                setLoading(false);
+                return; // Data loaded from cache, we're done.
+            }
+          }
+        } catch (e) {
+            console.warn("Failed to load surahs from cache, fetching from network.", e);
+            localStorage.removeItem('quranAppSurahs');
+        }
+
+        // 2. If cache fails or is empty, fetch from network
         try {
           const surahRes = await fetch('https://api.alquran.cloud/v1/surah');
           const surahData = await surahRes.json();
@@ -711,6 +742,12 @@ const QuranApp = () => {
           if (surahData.code === 200) {
             const fetchedSurahs = surahData.data;
             setSurahs(fetchedSurahs);
+            
+            try {
+              localStorage.setItem('quranAppSurahs', JSON.stringify(fetchedSurahs));
+            } catch (e) {
+              console.error("Could not cache surah data", e);
+            }
             
             const juzArray = VERIFIED_JUZ_STARTS.map((start, index) => {
               const surahInfo = fetchedSurahs.find(s => s.number === start.surah);
@@ -726,7 +763,7 @@ const QuranApp = () => {
             setJuzs(juzArray);
           }
         } catch (e) {
-          console.error(e);
+          console.error("Failed to fetch initial surah data:", e);
         } finally {
           setLoading(false);
         }
