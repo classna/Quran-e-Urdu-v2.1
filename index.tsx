@@ -38,14 +38,20 @@ interface Bookmark {
     surahNumber: number;
     surahEnglishName: string;
     verseNumber: number;
-    verseData: Verse;
+    verseData?: Verse; // For backward compatibility
+    globalVerseNumber?: number;
+    verseText?: string;
+    verseEnglishTranslation?: string;
+    verseUrduTranslation?: string;
 }
 
+
 interface LastRead {
-    surah?: Surah;
+    surah?: Surah; // For backward compatibility
     verseNumberInSurah: number;
-    surahNumber?: number; // for backward compatibility with old data in localStorage
+    surahNumber?: number;
 }
+
 
 // --- STATIC SURAH DATA ---
 const ALL_SURAHS: Surah[] = [
@@ -668,24 +674,31 @@ const BookmarksScreen = ({ bookmarks, onBookmarkSelect, settings }) => (
     <h2 className="text-2xl font-bold font-poppins mb-4">Bookmarks</h2>
     {bookmarks.length > 0 ? (
       <div className="space-y-3">
-        {bookmarks.map((bookmark, index) => (
-          <div key={bookmark.id} onClick={() => onBookmarkSelect(bookmark)} className="card p-4 cursor-pointer animate-slideInUp" style={{ animationDelay: `${index * 0.03}s` }}>
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="font-bold font-poppins">{bookmark.surahEnglishName}</h3>
-                <p className="text-sm text-[var(--color-text-secondary)]">Verse {bookmark.verseNumber}</p>
+        {bookmarks.map((bookmark, index) => {
+          const verseText = bookmark.verseText ?? bookmark.verseData?.text ?? '';
+          const translationText = settings.translationLanguage === 'urdu'
+              ? (bookmark.verseUrduTranslation ?? bookmark.verseData?.urduTranslation)
+              : (bookmark.verseEnglishTranslation ?? bookmark.verseData?.englishTranslation);
+
+          return (
+            <div key={bookmark.id} onClick={() => onBookmarkSelect(bookmark)} className="card p-4 cursor-pointer animate-slideInUp" style={{ animationDelay: `${index * 0.03}s` }}>
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-bold font-poppins">{bookmark.surahEnglishName}</h3>
+                  <p className="text-sm text-[var(--color-text-secondary)]">Verse {bookmark.verseNumber}</p>
+                </div>
+                <p className={`font-${settings.arabicFont} text-xl`}>{bookmark.surahName}</p>
               </div>
-              <p className={`font-${settings.arabicFont} text-xl`}>{bookmark.surahName}</p>
-            </div>
-            <p dir="rtl" className={`text-right text-[var(--color-text-primary)] font-${settings.arabicFont} arabic-text my-4`}>
-                {bookmark.verseData.text.replace(/[\u06dd\u0660-\u0669\s]+$/, '')}
+              <p dir="rtl" className={`text-right text-[var(--color-text-primary)] font-${settings.arabicFont} arabic-text my-4`}>
+                {verseText.replace(/[\u06dd\u0660-\u0669\s]+$/, '')}
                 <AyahEndSymbol number={bookmark.verseNumber} />
-            </p>
-            <p className={`text-[var(--color-text-secondary)] font-${settings.translationFont} translation-text line-clamp-3 text-right`}>
-              {settings.translationLanguage === 'urdu' ? bookmark.verseData.urduTranslation : bookmark.verseData.englishTranslation}
-            </p>
-          </div>
-        ))}
+              </p>
+              <p className={`text-[var(--color-text-secondary)] font-${settings.translationFont} translation-text line-clamp-3 text-right`}>
+                {translationText}
+              </p>
+            </div>
+          );
+        })}
       </div>
     ) : (
       <div className="text-center py-20">
@@ -1121,11 +1134,7 @@ const QuranApp = () => {
         
         audioRef.current.src = audioSrc;
         setPlaybackState(prev => ({ ...prev, loadingVerse: verseToPlay.number, currentVerseGlobal: verseToPlay.number }));
-        
-        const currentSurah = surahs.find(s => s.number === verseToPlay.surah.number)
-        if (currentSurah) {
-            setLastRead({ surah: currentSurah, verseNumberInSurah: verseToPlay.numberInSurah });
-        }
+        setLastRead({ surahNumber: verseToPlay.surah.number, verseNumberInSurah: verseToPlay.numberInSurah });
 
         audioRef.current.oncanplaythrough = () => {
             setPlaybackState(prev => ({ ...prev, loadingVerse: null }));
@@ -1175,7 +1184,7 @@ const QuranApp = () => {
     
     verseRefs.current[verseToPlay.number]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  }, [playbackState.status, playbackState.currentVerseIndex, playbackState.stage, verses, settings.qari, settings.translationAudio, surahs, stopPlayback, setLastRead]);
+  }, [playbackState.status, playbackState.currentVerseIndex, playbackState.stage, verses, settings.qari, settings.translationAudio, stopPlayback, setLastRead]);
 
 
   // --- Handlers ---
@@ -1253,16 +1262,28 @@ const QuranApp = () => {
     setBookmarks(prev => 
       prev.some(b => b.id === id) 
       ? prev.filter(b => b.id !== id) 
-      : [...prev, { id, surahName: verse.surah.name, surahNumber: verse.surah.number, surahEnglishName: verse.surah.englishName, verseNumber: verse.numberInSurah, verseData: verse }]
+      : [...prev, { 
+          id,
+          surahName: verse.surah.name,
+          surahNumber: verse.surah.number,
+          surahEnglishName: verse.surah.englishName,
+          verseNumber: verse.numberInSurah,
+          // New lean structure for performance
+          globalVerseNumber: verse.number,
+          verseText: verse.text,
+          verseEnglishTranslation: verse.englishTranslation,
+          verseUrduTranslation: verse.urduTranslation,
+        }]
     );
   }, [setBookmarks]);
   
   const handleBookmarkSelect = (bookmark: Bookmark) => {
     const surah = surahs.find(s => s.number === bookmark.surahNumber);
     if (surah) {
+        const globalVerseNum = bookmark.globalVerseNumber ?? bookmark.verseData.number;
         handleSurahSelect(surah);
-        setScrollToVerse(bookmark.verseData.number);
-        setPlayVerseOnLoad(bookmark.verseData.number);
+        setScrollToVerse(globalVerseNum);
+        setPlayVerseOnLoad(globalVerseNum);
     }
   };
 
@@ -1273,6 +1294,7 @@ const QuranApp = () => {
           if(surahStartVerseMap[surahNum]){
             const globalVerseNum = surahStartVerseMap[surahNum] + lastReadWithData.verseNumberInSurah - 1;
             setScrollToVerse(globalVerseNum);
+            setPlayVerseOnLoad(globalVerseNum);
           }
       }
   };
@@ -1291,8 +1313,11 @@ const QuranApp = () => {
 
   const lastReadWithData = useMemo(() => {
       if (!lastRead) return null;
-      const surahData = surahs.find(s => s.number === (lastRead.surah?.number || lastRead.surahNumber));
-      return surahData ? { ...lastRead, surah: surahData } : lastRead;
+      const surahNum = lastRead.surah?.number || lastRead.surahNumber;
+      if (!surahNum) return null;
+
+      const surahData = surahs.find(s => s.number === surahNum);
+      return surahData ? { surah: surahData, verseNumberInSurah: lastRead.verseNumberInSurah } : null;
   }, [lastRead, surahs]);
 
   const playingSurah = playbackState.currentVerseGlobal ? surahs.find(s => s.number === playbackState.surahNumber) : null;
