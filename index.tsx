@@ -143,7 +143,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":88,"name":"سُورَةُ ٱلْغَاشِيَةِ","englishName":"Al-Ghaashiya","englishNameTranslation":"The Overwhelming","numberOfAyahs":26,"revelationType":"Meccan"},
     {"number":89,"name":"سُورَةُ ٱلْفَجْرِ","englishName":"Al-Fajr","englishNameTranslation":"The Dawn","numberOfAyahs":30,"revelationType":"Meccan"},
     {"number":90,"name":"سُورَةُ ٱلْبَلَدِ","englishName":"Al-Balad","englishNameTranslation":"The City","numberOfAyahs":20,"revelationType":"Meccan"},
-    {"number":91,"name":"سُورَةُ ٱلشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
+    {"number":91,"name":"سُورَةُ ٱلْشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
     {"number":92,"name":"سُورَةُ ٱللَّيْلِ","englishName":"Al-Lail","englishNameTranslation":"The Night","numberOfAyahs":21,"revelationType":"Meccan"},
     {"number":93,"name":"سُورَةُ ٱلضُّحَىٰ","englishName":"Ad-Dhuhaa","englishNameTranslation":"The Morning Hours","numberOfAyahs":11,"revelationType":"Meccan"},
     {"number":94,"name":"سُورَةُ ٱلشَّرْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
@@ -266,6 +266,14 @@ const TRANSLATION_AUDIO_OPTIONS = [
     { id: 'ur.khan', name: 'Urdu (Farhat Hashmi)' },
 ];
 
+const PLAYBACK_SPEEDS = [
+    { id: 0.75, name: '0.75x' },
+    { id: 1.0, name: '1x' },
+    { id: 1.25, name: '1.25x' },
+    { id: 1.5, name: '1.5x' },
+    { id: 2.0, name: '2x' },
+];
+
 const DEFAULT_SETTINGS = {
     theme: 'sepia',
     translationLanguage: 'urdu',
@@ -277,6 +285,7 @@ const DEFAULT_SETTINGS = {
     translationFontSize: 15,
     arabicLineHeight: 1.5,
     translationLineHeight: 2.3,
+    playbackSpeed: 1.0,
 };
 
 type Settings = typeof DEFAULT_SETTINGS;
@@ -869,6 +878,20 @@ const SettingsScreen = ({ settings, onSettingChange, onReset }) => {
             {TRANSLATION_AUDIO_OPTIONS.map(opt => <option key={opt.id} value={opt.id}>{opt.name}</option>)}
           </select>
         </div>
+        <div>
+            <label className="block mb-2">Playback Speed</label>
+            <div className="flex justify-between rounded-lg p-1 bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)]">
+                {PLAYBACK_SPEEDS.map(speed => (
+                    <button 
+                        key={speed.id}
+                        onClick={() => onSettingChange('playbackSpeed', speed.id)} 
+                        className={`flex-1 px-2 py-2 rounded-md text-sm font-semibold transition-colors duration-200 ${settings.playbackSpeed === speed.id ? 'bg-[var(--color-primary)] text-white' : ''}`}
+                    >
+                        {speed.name}
+                    </button>
+                ))}
+            </div>
+        </div>
       </div>
       <div className="card p-6">
         <button
@@ -1037,6 +1060,12 @@ const QuranApp = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookmarks]);
+  
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = settings.playbackSpeed;
+    }
+  }, [settings.playbackSpeed]);
 
   // --- Data Loading ---
    const surahStartVerseMap = useMemo(() => {
@@ -1238,6 +1267,7 @@ const QuranApp = () => {
         }
         
         audioRef.current.src = audioSrc;
+        audioRef.current.playbackRate = settings.playbackSpeed;
         setPlaybackState(prev => ({ ...prev, loadingVerse: verseToPlay.number, currentVerseGlobal: verseToPlay.number }));
         setLastRead({ surahNumber: verseToPlay.surah.number, verseNumberInSurah: verseToPlay.numberInSurah });
 
@@ -1289,7 +1319,7 @@ const QuranApp = () => {
     
     verseRefs.current[verseToPlay.number]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  }, [playbackState.status, playbackState.currentVerseIndex, playbackState.stage, verses, settings.qari, settings.translationAudio, stopPlayback, setLastRead]);
+  }, [playbackState.status, playbackState.currentVerseIndex, playbackState.stage, verses, settings.qari, settings.translationAudio, stopPlayback, setLastRead, settings.playbackSpeed]);
 
 
   // --- Handlers ---
