@@ -139,7 +139,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":88,"name":"سُورَةُ ٱلْغَاشِيَةِ","englishName":"Al-Ghaashiya","englishNameTranslation":"The Overwhelming","numberOfAyahs":26,"revelationType":"Meccan"},
     {"number":89,"name":"سُورَةُ ٱلْفَجْرِ","englishName":"Al-Fajr","englishNameTranslation":"The Dawn","numberOfAyahs":30,"revelationType":"Meccan"},
     {"number":90,"name":"سُورَةُ ٱلْبَلَدِ","englishName":"Al-Balad","englishNameTranslation":"The City","numberOfAyahs":20,"revelationType":"Meccan"},
-    {"number":91,"name":"سُورَةُ ٱلشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
+    {"number":91,"name":"سُورَةُ ٱلْشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
     {"number":92,"name":"سُورَةُ ٱللَّيْلِ","englishName":"Al-Lail","englishNameTranslation":"The Night","numberOfAyahs":21,"revelationType":"Meccan"},
     {"number":93,"name":"سُورَةُ ٱلضُّحَىٰ","englishName":"Ad-Dhuhaa","englishNameTranslation":"The Morning Hours","numberOfAyahs":11,"revelationType":"Meccan"},
     {"number":94,"name":"سُورَةُ ٱلشَّرْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
@@ -461,9 +461,21 @@ const ConfirmationModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
 
 
 // --- SCREENS ---
+const WelcomeCard = () => (
+    <div className="card p-6 themed-gradient text-white relative overflow-hidden animate-scaleIn">
+      <img src="https://png.pngtree.com/png-clipart/20230407/original/pngtree-creative-golden-ramadan-kareem-mosque-png-image_9030411.png" alt="Mosque background" className="absolute right-0 bottom--5 h-full w-auto max-w-[60%] opacity-90 object-cover pointer-events-none" />
+      <div className="relative z-10">
+        <h2 className="text-3xl font-bold font-poppins">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّهِ وَبَرَكاتُهُ</h2>
+        <p className="mt-4 opacity-90 text-lg">"Indeed, with hardship will be ease."</p>
+        <p className="opacity-80 text-sm mt-1">Quran 94:6</p>
+      </div>
+    </div>
+);
+
 const HomeScreen = ({ surahs, juzs, settings, onSurahSelect, onJuzSelect, onPlaySurah, playbackState, lastRead, onContinueReading, homeView }) => {
   return (
     <div className="p-4 space-y-6">
+      <WelcomeCard />
       {lastRead && lastRead.surah && playbackState.status === 'stopped' && (
         <div onClick={onContinueReading} className="card p-6 themed-gradient text-white relative overflow-hidden cursor-pointer animate-scaleIn">
           <div className="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full"></div>
@@ -867,6 +879,10 @@ const QuranApp = () => {
   };
 
   // --- Effects ---
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeTab]);
+
   useEffect(() => {
     // App-wide cleanup
     return () => { if (audioRef.current) audioRef.current.pause(); };
