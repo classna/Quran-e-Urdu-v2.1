@@ -119,7 +119,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":64,"name":"سُورَةُ ٱلتَّغَابُنِ","englishName":"At-Taghaabun","englishNameTranslation":"The Mutual Disillusion","numberOfAyahs":18,"revelationType":"Medinan"},
     {"number":65,"name":"سُورَةُ ٱلطَّلَاقِ","englishName":"At-Talaaq","englishNameTranslation":"The Divorce","numberOfAyahs":12,"revelationType":"Medinan"},
     {"number":66,"name":"سُورَةُ ٱلتَّحْرِيمِ","englishName":"At-Tahrim","englishNameTranslation":"The Prohibition","numberOfAyahs":12,"revelationType":"Medinan"},
-    {"number":67,"name":"سُورَةُ ٱلْمُلْكِ","englishName":"Al-Mulk","englishNameTranslation":"The Sovereignty","numberOfAyahs":30,"revelationType":"Meccan"},
+    {"number":67,"name":"سُورَةُ ٱلْكُمْكِ","englishName":"Al-Mulk","englishNameTranslation":"The Sovereignty","numberOfAyahs":30,"revelationType":"Meccan"},
     {"number":68,"name":"سُورَةُ ٱلْقَلَمِ","englishName":"Al-Qalam","englishNameTranslation":"The Pen","numberOfAyahs":52,"revelationType":"Meccan"},
     {"number":69,"name":"سُورَةُ ٱلْحَاقَّةِ","englishName":"Al-Haaqqa","englishNameTranslation":"The Reality","numberOfAyahs":52,"revelationType":"Meccan"},
     {"number":70,"name":"سُورَةُ ٱلْمَعَارِجِ","englishName":"Al-Ma'aarij","englishNameTranslation":"The Ascending Stairways","numberOfAyahs":44,"revelationType":"Meccan"},
@@ -723,7 +723,7 @@ const formatTimestamp = (timestamp: number) => {
   });
 };
 
-const BookmarksScreen = ({ bookmarks, onBookmarkSelect }) => {
+const BookmarksScreen = ({ bookmarks, onBookmarkSelect, settings }) => {
   const sortedBookmarks = [...bookmarks].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
   return (
@@ -733,7 +733,10 @@ const BookmarksScreen = ({ bookmarks, onBookmarkSelect }) => {
         <div className="space-y-3">
           {sortedBookmarks.map((bookmark, index) => (
               <div key={bookmark.id} onClick={() => onBookmarkSelect(bookmark)} className="card p-4 cursor-pointer animate-slideInUp" style={{ animationDelay: `${index * 0.03}s` }}>
-                <h3 className="font-bold font-poppins truncate">{bookmark.surahEnglishName}: {bookmark.verseNumber}</h3>
+                <div className="flex justify-between items-center">
+                    <h3 className="font-bold font-poppins truncate">{bookmark.surahEnglishName}: {bookmark.verseNumber}</h3>
+                    <p className={`font-${settings.arabicFont} text-xl text-right`}>{bookmark.surahName}</p>
+                </div>
                 <p className="text-xs text-[var(--color-text-secondary)] mt-1">{formatTimestamp(bookmark.timestamp)}</p>
               </div>
             )
@@ -1470,7 +1473,7 @@ const QuranApp = () => {
       />;
       case 'surah': return selectedSurah ? <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} /> : null;
       case 'juz': return selectedJuz ? <JuzScreen loading={loading} juz={selectedJuz} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} /> : null;
-      case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} />;
+      case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} settings={settings} />;
       case 'search': return <SearchScreen />;
       case 'settings': return <SettingsScreen settings={settings} onSettingChange={handleSettingChange} onReset={() => setShowResetConfirmModal(true)} />;
       default: return <HomeScreen 
