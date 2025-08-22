@@ -463,11 +463,10 @@ const ConfirmationModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
 // --- SCREENS ---
 const WelcomeCard = () => (
     <div className="card p-6 themed-gradient text-white relative overflow-hidden animate-scaleIn">
-      <img src="https://png.pngtree.com/png-clipart/20230407/original/pngtree-creative-golden-ramadan-kareem-mosque-png-image_9030411.png" alt="Mosque background" className="absolute right-0 bottom--5 h-full w-auto max-w-[60%] opacity-90 object-cover pointer-events-none" />
+      <img src="https://png.pngtree.com/png-clipart/20230407/original/pngtree-creative-golden-ramadan-kareem-mosque-png-image_9030411.png" alt="Mosque background" className="absolute right-0 bottom--10 h-full w-auto max-w-[60%] opacity-50 object-cover pointer-events-none" />
       <div className="relative z-10">
-        <h2 className="text-3xl font-bold font-poppins">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّهِ وَبَرَكاتُهُ</h2>
-        <p className="mt-4 opacity-90 text-lg">"Indeed, with hardship will be ease."</p>
-        <p className="opacity-80 text-sm mt-1">Quran 94:6</p>
+        <p className="opacity-90 text-lg">Those who spend their wealth by night and day, privately and publicly, will receive their reward from their Lord</p>
+        <p className="opacity-80 text-sm mt-1">Al-Baqara 2:274</p>
       </div>
     </div>
 );
