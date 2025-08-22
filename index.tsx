@@ -42,6 +42,7 @@ interface Bookmark {
     verseText: string;
     verseEnglishTranslation: string;
     verseUrduTranslation: string;
+    timestamp: number;
 }
 
 interface LastRead {
@@ -90,7 +91,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":36,"name":"سُورَةُ يسٓ","englishName":"Yaseen","englishNameTranslation":"Yaseen","numberOfAyahs":83,"revelationType":"Meccan"},
     {"number":37,"name":"سُورَةُ ٱلصَّافَّاتِ","englishName":"As-Saaffaat","englishNameTranslation":"Those who set the Ranks","numberOfAyahs":182,"revelationType":"Meccan"},
     {"number":38,"name":"سُورَةُ صٓ","englishName":"Saad","englishNameTranslation":"The Letter \"Saad\"","numberOfAyahs":88,"revelationType":"Meccan"},
-    {"number":39,"name":"سُورَةُ ٱلزُّمَرِ","englishName":"Az-Zumar","englishNameTranslation":"The Troops","numberOfAyahs":75,"revelationType":"Meccan"},
+    {"number":39,"name":"سُورَةُ ٱلز'ُمَرِ","englishName":"Az-Zumar","englishNameTranslation":"The Troops","numberOfAyahs":75,"revelationType":"Meccan"},
     {"number":40,"name":"سُورَةُ غَافِرٍ","englishName":"Ghafir","englishNameTranslation":"The Forgiver","numberOfAyahs":85,"revelationType":"Meccan"},
     {"number":41,"name":"سُورَةُ فُصِّلَتْ","englishName":"Fussilat","englishNameTranslation":"Explained in detail","numberOfAyahs":54,"revelationType":"Meccan"},
     {"number":42,"name":"سُورَةُ ٱلشُّورَىٰ","englishName":"Ash-Shura","englishNameTranslation":"The Consultation","numberOfAyahs":53,"revelationType":"Meccan"},
@@ -114,18 +115,18 @@ const ALL_SURAHS: Surah[] = [
     {"number":60,"name":"سُورَةُ ٱلْمُمْتَحَنَةِ","englishName":"Al-Mumtahana","englishNameTranslation":"She that is to be examined","numberOfAyahs":13,"revelationType":"Medinan"},
     {"number":61,"name":"سُورَةُ ٱلصَّفِّ","englishName":"As-Saff","englishNameTranslation":"The Ranks","numberOfAyahs":14,"revelationType":"Medinan"},
     {"number":62,"name":"سُورَةُ ٱلْجُمُعَةِ","englishName":"Al-Jumu'a","englishNameTranslation":"The Congregation, Friday","numberOfAyahs":11,"revelationType":"Medinan"},
-    {"number":63,"name":"سُورَةُ ٱلْْمُنَافِقُونَ","englishName":"Al-Munaafiqoon","englishNameTranslation":"The Hypocrites","numberOfAyahs":11,"revelationType":"Medinan"},
+    {"number":63,"name":"سُورَةُ ٱلْمُنَافِقُونَ","englishName":"Al-Munaafiqoon","englishNameTranslation":"The Hypocrites","numberOfAyahs":11,"revelationType":"Medinan"},
     {"number":64,"name":"سُورَةُ ٱلتَّغَابُنِ","englishName":"At-Taghaabun","englishNameTranslation":"The Mutual Disillusion","numberOfAyahs":18,"revelationType":"Medinan"},
     {"number":65,"name":"سُورَةُ ٱلطَّلَاقِ","englishName":"At-Talaaq","englishNameTranslation":"The Divorce","numberOfAyahs":12,"revelationType":"Medinan"},
     {"number":66,"name":"سُورَةُ ٱلتَّحْرِيمِ","englishName":"At-Tahrim","englishNameTranslation":"The Prohibition","numberOfAyahs":12,"revelationType":"Medinan"},
-    {"number":67,"name":"سُورَةُ ٱلْْمُلْكِ","englishName":"Al-Mulk","englishNameTranslation":"The Sovereignty","numberOfAyahs":30,"revelationType":"Meccan"},
+    {"number":67,"name":"سُورَةُ ٱلْمُلْكِ","englishName":"Al-Mulk","englishNameTranslation":"The Sovereignty","numberOfAyahs":30,"revelationType":"Meccan"},
     {"number":68,"name":"سُورَةُ ٱلْقَلَمِ","englishName":"Al-Qalam","englishNameTranslation":"The Pen","numberOfAyahs":52,"revelationType":"Meccan"},
     {"number":69,"name":"سُورَةُ ٱلْحَاقَّةِ","englishName":"Al-Haaqqa","englishNameTranslation":"The Reality","numberOfAyahs":52,"revelationType":"Meccan"},
     {"number":70,"name":"سُورَةُ ٱلْمَعَارِجِ","englishName":"Al-Ma'aarij","englishNameTranslation":"The Ascending Stairways","numberOfAyahs":44,"revelationType":"Meccan"},
     {"number":71,"name":"سُورَةُ نُوحٍ","englishName":"Nooh","englishNameTranslation":"Noah","numberOfAyahs":28,"revelationType":"Meccan"},
     {"number":72,"name":"سُورَةُ ٱلْجِنِّ","englishName":"Al-Jinn","englishNameTranslation":"The Jinn","numberOfAyahs":28,"revelationType":"Meccan"},
     {"number":73,"name":"سُورَةُ ٱلْمُزَّمِّلِ","englishName":"Al-Muzzammil","englishNameTranslation":"The Enshrouded One","numberOfAyahs":20,"revelationType":"Meccan"},
-    {"number":74,"name":"سُورَةُ ٱلْْمُدَّثِّرِ","englishName":"Al-Muddaththir","englishNameTranslation":"The Cloaked One","numberOfAyahs":56,"revelationType":"Meccan"},
+    {"number":74,"name":"سُورَةُ ٱلْمُدَّثِّرِ","englishName":"Al-Muddaththir","englishNameTranslation":"The Cloaked One","numberOfAyahs":56,"revelationType":"Meccan"},
     {"number":75,"name":"سُورَةُ ٱلْقِيَامَةِ","englishName":"Al-Qiyaama","englishNameTranslation":"The Resurrection","numberOfAyahs":40,"revelationType":"Meccan"},
     {"number":76,"name":"سُورَةُ ٱلْإِنْسَانِ","englishName":"Al-Insaan","englishNameTranslation":"Man","numberOfAyahs":31,"revelationType":"Medinan"},
     {"number":77,"name":"سُورَةُ ٱلْمُرْسَلَاتِ","englishName":"Al-Mursalaat","englishNameTranslation":"The Emissaries","numberOfAyahs":50,"revelationType":"Meccan"},
@@ -142,7 +143,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":88,"name":"سُورَةُ ٱلْغَاشِيَةِ","englishName":"Al-Ghaashiya","englishNameTranslation":"The Overwhelming","numberOfAyahs":26,"revelationType":"Meccan"},
     {"number":89,"name":"سُورَةُ ٱلْفَجْرِ","englishName":"Al-Fajr","englishNameTranslation":"The Dawn","numberOfAyahs":30,"revelationType":"Meccan"},
     {"number":90,"name":"سُورَةُ ٱلْبَلَدِ","englishName":"Al-Balad","englishNameTranslation":"The City","numberOfAyahs":20,"revelationType":"Meccan"},
-    {"number":91,"name":"سُورَةُ ٱلْشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
+    {"number":91,"name":"سُورَةُ ٱلشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
     {"number":92,"name":"سُورَةُ ٱللَّيْلِ","englishName":"Al-Lail","englishNameTranslation":"The Night","numberOfAyahs":21,"revelationType":"Meccan"},
     {"number":93,"name":"سُورَةُ ٱلضُّحَىٰ","englishName":"Ad-Dhuhaa","englishNameTranslation":"The Morning Hours","numberOfAyahs":11,"revelationType":"Meccan"},
     {"number":94,"name":"سُورَةُ ٱلشَّرْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
@@ -160,7 +161,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":106,"name":"سُورَةُ قُرَيْشٍ","englishName":"Quraish","englishNameTranslation":"Quraysh","numberOfAyahs":4,"revelationType":"Meccan"},
     {"number":107,"name":"سُورَةُ ٱلْمَاعُونِ","englishName":"Al-Maa'un","englishNameTranslation":"The Small Kindnesses","numberOfAyahs":7,"revelationType":"Meccan"},
     {"number":108,"name":"سُورَةُ ٱلْكَوْثَرِ","englishName":"Al-Kawthar","englishNameTranslation":"The Abundance","numberOfAyahs":3,"revelationType":"Meccan"},
-    {"number":109,"name":"سُورَةُ ٱلْكَافِرُونَ","englishName":"Al-Kaafiroon","englishNameTranslation":"The Disbelievers","numberOfAyahs":6,"revelationType":"Meccan"},
+    {"number":109,"name":"سُورَةُ ٱلْكَافِرُونَ","englishName":"Al-Kaafiroon","englishNameTranslation":"The Dis believers","numberOfAyahs":6,"revelationType":"Meccan"},
     {"number":110,"name":"سُورَةُ ٱلنَّصْرِ","englishName":"An-Nasr","englishNameTranslation":"The Divine Support","numberOfAyahs":3,"revelationType":"Medinan"},
     {"number":111,"name":"سُورَةُ ٱلْمَسَدِ","englishName":"Al-Masad","englishNameTranslation":"The Palm Fiber","numberOfAyahs":5,"revelationType":"Meccan"},
     {"number":112,"name":"سُورَةُ ٱلْإِخْلَاصِ","englishName":"Al-Ikhlaas","englishNameTranslation":"The Sincerity","numberOfAyahs":4,"revelationType":"Meccan"},
@@ -237,7 +238,12 @@ const VERIFIED_JUZ_STARTS = [
     { surah: 78, ayah: 1 }   // Juz 30
 ];
 
-const QARIS = [{ id: 'ar.alafasy', name: 'Mishary Rashid Alafasy' }, { id: 'ar.hudhaify', name: 'Ali Al-Hudhaify' }, { id: 'ar.mahermuaiqly', name: 'Maher Al Muaqily' }];
+const QARIS = [
+    { id: 'ar.abdulbasitmurattal', name: 'Abdul Basit Murattal' },
+    { id: 'ar.hudhaify', name: 'Ali Al-Hudhaify' },
+    { id: 'ar.mahermuaiqly', name: 'Maher Al Muaqily' },
+    { id: 'ar.alafasy', name: 'Mishary Rashid Alafasy' }
+];
 const THEMES = [{ id: 'serenity', name: 'Serenity' }, { id: 'sunrise', name: 'Sunrise' }, { id: 'majestic', name: 'Majestic' }, { id: 'sepia', name: 'Sepia' }, { id: 'olive', name: 'Olive' }, { id: 'midnight', name: 'Midnight' }];
 const ARABIC_FONTS = [
     { id: 'kfgqpc-v2', name: 'KFGQPC V2 (Uthmani)' },
@@ -261,7 +267,7 @@ const TRANSLATION_AUDIO_OPTIONS = [
 ];
 
 const DEFAULT_SETTINGS = {
-    theme: 'olive',
+    theme: 'sepia',
     translationLanguage: 'urdu',
     qari: 'ar.alafasy',
     translationAudio: 'ur.khan',
@@ -704,47 +710,46 @@ const JuzScreen = ({ juz, verses, settings, onPlayVerse, onBookmark, bookmarks, 
     );
 };
 
+const formatTimestamp = (timestamp: number) => {
+  if (!timestamp) return '';
+  const date = new Date(timestamp);
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+};
 
-const BookmarksScreen = ({ bookmarks, onBookmarkSelect, settings }) => (
-  <div className="p-4">
-    <h2 className="text-2xl font-bold font-poppins mb-4">Bookmarks</h2>
-    {bookmarks.length > 0 ? (
-      <div className="space-y-3">
-        {bookmarks.map((bookmark, index) => {
-          const verseText = bookmark.verseText;
-          const translationText = settings.translationLanguage === 'urdu'
-              ? bookmark.verseUrduTranslation
-              : bookmark.verseEnglishTranslation;
+const BookmarksScreen = ({ bookmarks, onBookmarkSelect }) => {
+  const sortedBookmarks = [...bookmarks].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-          return (
-            <div key={bookmark.id} onClick={() => onBookmarkSelect(bookmark)} className="card p-4 cursor-pointer animate-slideInUp" style={{ animationDelay: `${index * 0.03}s` }}>
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-bold font-poppins">{bookmark.surahEnglishName}</h3>
-                  <p className="text-sm text-[var(--color-text-secondary)]">Verse {bookmark.verseNumber}</p>
-                </div>
-                <p className={`font-${settings.arabicFont} text-xl`}>{bookmark.surahName}</p>
+  return (
+    <div className="p-4">
+      <h2 className="text-2xl font-bold font-poppins mb-4">Bookmarks</h2>
+      {sortedBookmarks.length > 0 ? (
+        <div className="space-y-3">
+          {sortedBookmarks.map((bookmark, index) => (
+              <div key={bookmark.id} onClick={() => onBookmarkSelect(bookmark)} className="card p-4 cursor-pointer animate-slideInUp" style={{ animationDelay: `${index * 0.03}s` }}>
+                <h3 className="font-bold font-poppins truncate">{bookmark.surahEnglishName}: {bookmark.verseNumber}</h3>
+                <p className="text-xs text-[var(--color-text-secondary)] mt-1">{formatTimestamp(bookmark.timestamp)}</p>
               </div>
-              <p dir="rtl" className={`text-right text-[var(--color-text-primary)] font-${settings.arabicFont} arabic-text my-4`}>
-                {verseText.replace(/[\u06dd\u0660-\u0669\s]+$/, '')}
-                <AyahEndSymbol number={bookmark.verseNumber} />
-              </p>
-              <p className={`text-[var(--color-text-secondary)] font-${settings.translationFont} translation-text line-clamp-3 text-right`}>
-                {translationText}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    ) : (
-      <div className="text-center py-20">
-        <BookmarkIcon className="w-12 h-12 mx-auto text-[var(--color-text-secondary)] mb-4" />
-        <h3 className="text-xl font-bold font-poppins">No Bookmarks Yet</h3>
-        <p className="text-[var(--color-text-secondary)] mt-1">Tap the bookmark icon on a verse to save it.</p>
-      </div>
-    )}
-  </div>
-);
+            )
+          )}
+        </div>
+      ) : (
+        <div className="text-center py-20">
+          <BookmarkIcon className="w-12 h-12 mx-auto text-[var(--color-text-secondary)] mb-4" />
+          <h3 className="text-xl font-bold font-poppins">No Bookmarks Yet</h3>
+          <p className="text-[var(--color-text-secondary)] mt-1">Tap the bookmark icon on a verse to save it.</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 const SearchScreen = () => (
     <div className="p-4">
@@ -945,7 +950,7 @@ const QuranApp = () => {
         const parsed = JSON.parse(storedBookmarks);
         if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].verseData) {
           console.log("PERFORMANCE: Migrating bookmarks to lean format.");
-          const migrated = parsed.map(b => ({
+          const migrated = parsed.map((b, index) => ({
             id: b.id,
             surahName: b.surahName,
             surahNumber: b.surahNumber,
@@ -955,6 +960,7 @@ const QuranApp = () => {
             verseText: b.verseData.text,
             verseEnglishTranslation: b.verseData.englishTranslation,
             verseUrduTranslation: b.verseData.urduTranslation,
+            timestamp: b.timestamp || (Date.now() - (parsed.length - index) * 60000),
           }));
           setBookmarks(migrated);
         }
@@ -1011,6 +1017,24 @@ const QuranApp = () => {
     }
   }, [settings.translationLanguage, settings.translationFont, handleSettingChange]);
   
+  // Add timestamps to bookmarks that don't have them
+  useEffect(() => {
+    if (bookmarks.length === 0) return;
+    const needsMigration = bookmarks.some(b => typeof b.timestamp === 'undefined');
+
+    if (needsMigration) {
+      console.log("MIGRATING: Adding timestamps to legacy bookmarks.");
+      const migratedBookmarks = bookmarks.map((bookmark, index) => {
+        if (typeof bookmark.timestamp === 'undefined') {
+          return { ...bookmark, timestamp: Date.now() - (bookmarks.length - index) * 60000 };
+        }
+        return bookmark;
+      });
+      setBookmarks(migratedBookmarks);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookmarks]);
+
   // --- Data Loading ---
    const surahStartVerseMap = useMemo(() => {
     if (surahs.length === 0) return {};
@@ -1350,6 +1374,7 @@ const QuranApp = () => {
           verseText: verse.text,
           verseEnglishTranslation: verse.englishTranslation,
           verseUrduTranslation: verse.urduTranslation,
+          timestamp: Date.now(),
         }]
     );
   }, [setBookmarks]);
@@ -1445,7 +1470,7 @@ const QuranApp = () => {
       />;
       case 'surah': return selectedSurah ? <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} /> : null;
       case 'juz': return selectedJuz ? <JuzScreen loading={loading} juz={selectedJuz} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} /> : null;
-      case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} settings={settings} />;
+      case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} />;
       case 'search': return <SearchScreen />;
       case 'settings': return <SettingsScreen settings={settings} onSettingChange={handleSettingChange} onReset={() => setShowResetConfirmModal(true)} />;
       default: return <HomeScreen 
