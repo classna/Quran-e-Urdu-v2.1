@@ -37,19 +37,16 @@ interface Bookmark {
     surahName: string;
     surahNumber: number;
     surahEnglishName: string;
-    verseNumber: number;
-    verseData?: Verse; // For backward compatibility
-    globalVerseNumber?: number;
-    verseText?: string;
-    verseEnglishTranslation?: string;
-    verseUrduTranslation?: string;
+    verseNumber: number; // This is numberInSurah
+    globalVerseNumber: number;
+    verseText: string;
+    verseEnglishTranslation: string;
+    verseUrduTranslation: string;
 }
 
-
 interface LastRead {
-    surah?: Surah; // For backward compatibility
+    surahNumber: number;
     verseNumberInSurah: number;
-    surahNumber?: number;
 }
 
 
@@ -467,31 +464,70 @@ const ConfirmationModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
 
 
 // --- SCREENS ---
-const WelcomeCard = () => (
-    <div className="card p-6 themed-gradient text-white relative overflow-hidden animate-scaleIn">
-      <img src="https://png.pngtree.com/png-clipart/20230407/original/pngtree-creative-golden-ramadan-kareem-mosque-png-image_9030411.png" alt="Mosque background" className="absolute right-0 bottom--10 h-full w-auto max-w-[60%] opacity-50 object-cover pointer-events-none" />
-      <div className="relative z-10">
-        <p className="opacity-90 text-lg">Those who spend their wealth by night and day, privately and publicly, will receive their reward from their Lord</p>
-        <p className="opacity-80 text-sm mt-1">Al-Baqara 2:274</p>
-      </div>
-    </div>
-);
+const HomeHeaderCard = ({ playbackState, lastRead, onContinueReading, playingSurah, onTogglePlay, onNavigateToPlayer, currentVerseInSurah }) => {
+    const isPlayingOrPaused = playbackState.status === 'playing' || playbackState.status === 'paused';
+    const showContinueReading = lastRead && playbackState.status === 'stopped';
 
-const HomeScreen = ({ surahs, juzs, settings, onSurahSelect, onJuzSelect, onPlaySurah, playbackState, lastRead, onContinueReading, homeView }) => {
+    let content;
+    if (isPlayingOrPaused && playingSurah) {
+        content = (
+            <div className="relative z-10 w-full cursor-pointer" onClick={onNavigateToPlayer}>
+                <div className="flex items-center justify-between">
+                    <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-sm opacity-80 mb-1">NOW PLAYING</p>
+                        <h3 className="text-2xl font-bold font-poppins truncate">{playingSurah.englishName}</h3>
+                        <p className="opacity-90">
+                            {currentVerseInSurah ? (playbackState.status === 'playing' ? `Playing Verse ${currentVerseInSurah}` : `Paused at Verse ${currentVerseInSurah}`) : (playbackState.status === 'playing' ? 'Playing...' : 'Paused')}
+                        </p>
+                    </div>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onTogglePlay(); }}
+                        className="w-14 h-14 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white flex-shrink-0 z-10 ml-4 transition-colors"
+                    >
+                        {playbackState.status === 'playing' ? <PauseIcon className="w-7 h-7" /> : <PlayIcon className="w-7 h-7 ml-1" />}
+                    </button>
+                </div>
+            </div>
+        );
+    } else if (showContinueReading) {
+        content = (
+            <div className="relative z-10 cursor-pointer" onClick={onContinueReading}>
+                <p className="font-semibold text-sm opacity-80 mb-1">CONTINUE READING</p>
+                <h3 className="text-2xl font-bold font-poppins">{lastRead.surah.englishName}</h3>
+                <p className="opacity-90">Verse {lastRead.verseNumberInSurah}</p>
+            </div>
+        );
+    } else {
+        content = (
+            <div className="relative z-10">
+                <p className="opacity-90 text-lg">Those who spend their wealth by night and day, privately and publicly, will receive their reward from their Lord</p>
+                <p className="opacity-80 text-sm mt-1">Al-Baqara 2:274</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="card p-6 themed-gradient text-white relative overflow-hidden animate-scaleIn">
+            <img src="https://png.pngtree.com/png-clipart/20230407/original/pngtree-creative-golden-ramadan-kareem-mosque-png-image_9030411.png" alt="Mosque background" className="absolute right-0 bottom--10 h-full w-auto max-w-[60%] opacity-50 object-cover pointer-events-none" />
+            {content}
+        </div>
+    );
+};
+
+
+const HomeScreen = ({ surahs, juzs, settings, onSurahSelect, onJuzSelect, onPlaySurah, playbackState, lastRead, onContinueReading, homeView, playingSurah, onTogglePlay, onNavigateToPlayer, currentVerseInSurah }) => {
   return (
     <div className="p-4 space-y-6">
-      <WelcomeCard />
-      {lastRead && lastRead.surah && playbackState.status === 'stopped' && (
-        <div onClick={onContinueReading} className="card p-6 themed-gradient text-white relative overflow-hidden cursor-pointer animate-scaleIn">
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full"></div>
-          <div className="relative z-10">
-            <p className="font-semibold text-sm opacity-80 mb-1">CONTINUE READING</p>
-            <h3 className="text-2xl font-bold font-poppins">{lastRead.surah.englishName}</h3>
-            <p className="opacity-90">Verse {lastRead.verseNumberInSurah}</p>
-          </div>
-        </div>
-      )}
-
+      <HomeHeaderCard 
+        playbackState={playbackState}
+        lastRead={lastRead}
+        onContinueReading={onContinueReading}
+        playingSurah={playingSurah}
+        onTogglePlay={onTogglePlay}
+        onNavigateToPlayer={onNavigateToPlayer}
+        currentVerseInSurah={currentVerseInSurah}
+      />
+      
       <div>
         {homeView === 'surahs' ? (
           <div className="space-y-3">
@@ -675,10 +711,10 @@ const BookmarksScreen = ({ bookmarks, onBookmarkSelect, settings }) => (
     {bookmarks.length > 0 ? (
       <div className="space-y-3">
         {bookmarks.map((bookmark, index) => {
-          const verseText = bookmark.verseText ?? bookmark.verseData?.text ?? '';
+          const verseText = bookmark.verseText;
           const translationText = settings.translationLanguage === 'urdu'
-              ? (bookmark.verseUrduTranslation ?? bookmark.verseData?.urduTranslation)
-              : (bookmark.verseEnglishTranslation ?? bookmark.verseData?.englishTranslation);
+              ? bookmark.verseUrduTranslation
+              : bookmark.verseEnglishTranslation;
 
           return (
             <div key={bookmark.id} onClick={() => onBookmarkSelect(bookmark)} className="card p-4 cursor-pointer animate-slideInUp" style={{ animationDelay: `${index * 0.03}s` }}>
@@ -899,6 +935,48 @@ const QuranApp = () => {
     // App-wide cleanup
     return () => { if (audioRef.current) audioRef.current.pause(); };
   }, []);
+  
+  // One-time data migration for performance
+  useEffect(() => {
+    try {
+      // Migrate Bookmarks
+      const storedBookmarks = localStorage.getItem('quranAppBookmarks');
+      if (storedBookmarks) {
+        const parsed = JSON.parse(storedBookmarks);
+        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].verseData) {
+          console.log("PERFORMANCE: Migrating bookmarks to lean format.");
+          const migrated = parsed.map(b => ({
+            id: b.id,
+            surahName: b.surahName,
+            surahNumber: b.surahNumber,
+            surahEnglishName: b.surahEnglishName,
+            verseNumber: b.verseNumber,
+            globalVerseNumber: b.verseData.number,
+            verseText: b.verseData.text,
+            verseEnglishTranslation: b.verseData.englishTranslation,
+            verseUrduTranslation: b.verseData.urduTranslation,
+          }));
+          setBookmarks(migrated);
+        }
+      }
+
+      // Migrate Last Read
+      const storedLastRead = localStorage.getItem('quranAppLastRead');
+      if (storedLastRead) {
+        const parsed = JSON.parse(storedLastRead);
+        if (parsed && parsed.surah) {
+          console.log("PERFORMANCE: Migrating last read to lean format.");
+          setLastRead({
+            surahNumber: parsed.surah.number,
+            verseNumberInSurah: parsed.verseNumberInSurah,
+          });
+        }
+      }
+    } catch (e) {
+      console.error("Data migration failed", e);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only once on startup
 
   // Migration for old Urdu audio setting
   useEffect(() => {
@@ -1268,7 +1346,6 @@ const QuranApp = () => {
           surahNumber: verse.surah.number,
           surahEnglishName: verse.surah.englishName,
           verseNumber: verse.numberInSurah,
-          // New lean structure for performance
           globalVerseNumber: verse.number,
           verseText: verse.text,
           verseEnglishTranslation: verse.englishTranslation,
@@ -1280,7 +1357,7 @@ const QuranApp = () => {
   const handleBookmarkSelect = (bookmark: Bookmark) => {
     const surah = surahs.find(s => s.number === bookmark.surahNumber);
     if (surah) {
-        const globalVerseNum = bookmark.globalVerseNumber ?? bookmark.verseData.number;
+        const globalVerseNum = bookmark.globalVerseNumber;
         handleSurahSelect(surah);
         setScrollToVerse(globalVerseNum);
         setPlayVerseOnLoad(globalVerseNum);
@@ -1295,6 +1372,12 @@ const QuranApp = () => {
             const globalVerseNum = surahStartVerseMap[surahNum] + lastReadWithData.verseNumberInSurah - 1;
             setScrollToVerse(globalVerseNum);
             setPlayVerseOnLoad(globalVerseNum);
+             setPlaybackState(prev => ({
+                ...prev,
+                status: 'paused', // Set to paused to prime it for playing
+                surahNumber: surahNum,
+                currentVerseGlobal: globalVerseNum,
+            }));
           }
       }
   };
@@ -1310,10 +1393,16 @@ const QuranApp = () => {
     
     setScrollToVerse(playbackState.currentVerseGlobal);
   };
+  
+  const handleTogglePlayPause = useCallback(() => {
+    setPlaybackState(p => ({...p, status: p.status === 'playing' ? 'paused' : 'playing' }))
+  }, []);
 
   const lastReadWithData = useMemo(() => {
       if (!lastRead) return null;
-      const surahNum = lastRead.surah?.number || lastRead.surahNumber;
+      // Handle old format from localStorage for one-time migration
+      const oldFormatLastRead = lastRead as any;
+      const surahNum = oldFormatLastRead.surahNumber || oldFormatLastRead.surah?.number;
       if (!surahNum) return null;
 
       const surahData = surahs.find(s => s.number === surahNum);
@@ -1323,7 +1412,7 @@ const QuranApp = () => {
   const playingSurah = playbackState.currentVerseGlobal ? surahs.find(s => s.number === playbackState.surahNumber) : null;
 
   const isPlayerUiVisible = useMemo(() => {
-    if (!playingSurah || playbackState.status === 'stopped' || activeTab === 'settings') {
+    if (activeTab === 'home' || !playingSurah || playbackState.status === 'stopped' || activeTab === 'settings') {
         return false;
     }
     if (playbackContext?.type === 'surah' && activeTab === 'surah' && selectedSurah?.number === (playbackContext.data as Surah).number) {
@@ -1338,13 +1427,43 @@ const QuranApp = () => {
   // --- Render Logic ---
   const renderContent = () => {
     switch (activeTab) {
-      case 'home': return <HomeScreen homeView={homeView} surahs={surahs} juzs={juzs} settings={settings} onSurahSelect={handleSurahSelect} onJuzSelect={handleJuzSelect} onPlaySurah={handlePlaySurah} playbackState={playbackState} lastRead={lastReadWithData} onContinueReading={handleContinueReading} />;
+      case 'home': return <HomeScreen 
+          homeView={homeView} 
+          surahs={surahs} 
+          juzs={juzs} 
+          settings={settings} 
+          onSurahSelect={handleSurahSelect} 
+          onJuzSelect={handleJuzSelect} 
+          onPlaySurah={handlePlaySurah} 
+          playbackState={playbackState} 
+          lastRead={lastReadWithData} 
+          onContinueReading={handleContinueReading} 
+          playingSurah={playingSurah}
+          onTogglePlay={handleTogglePlayPause}
+          onNavigateToPlayer={handleNavigateToPlayer}
+          currentVerseInSurah={lastReadWithData?.verseNumberInSurah}
+      />;
       case 'surah': return selectedSurah ? <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} /> : null;
       case 'juz': return selectedJuz ? <JuzScreen loading={loading} juz={selectedJuz} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} /> : null;
       case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} settings={settings} />;
       case 'search': return <SearchScreen />;
       case 'settings': return <SettingsScreen settings={settings} onSettingChange={handleSettingChange} onReset={() => setShowResetConfirmModal(true)} />;
-      default: return <HomeScreen homeView={homeView} surahs={surahs} juzs={juzs} settings={settings} onSurahSelect={handleSurahSelect} onJuzSelect={handleJuzSelect} onPlaySurah={handlePlaySurah} playbackState={playbackState} lastRead={lastReadWithData} onContinueReading={handleContinueReading} />;
+      default: return <HomeScreen 
+          homeView={homeView} 
+          surahs={surahs} 
+          juzs={juzs} 
+          settings={settings} 
+          onSurahSelect={handleSurahSelect} 
+          onJuzSelect={handleJuzSelect} 
+          onPlaySurah={handlePlaySurah} 
+          playbackState={playbackState} 
+          lastRead={lastReadWithData} 
+          onContinueReading={handleContinueReading} 
+          playingSurah={playingSurah}
+          onTogglePlay={handleTogglePlayPause}
+          onNavigateToPlayer={handleNavigateToPlayer}
+          currentVerseInSurah={lastReadWithData?.verseNumberInSurah}
+      />;
     }
   };
 
@@ -1376,7 +1495,7 @@ const QuranApp = () => {
         <StickyPlayer
           surah={playingSurah}
           status={playbackState.status}
-          onTogglePlay={() => setPlaybackState(p => ({...p, status: p.status === 'playing' ? 'paused' : 'playing' }))}
+          onTogglePlay={handleTogglePlayPause}
           onNavigate={handleNavigateToPlayer}
           currentVerseInSurah={lastReadWithData?.verseNumberInSurah}
         />
