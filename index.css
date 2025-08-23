@@ -83,12 +83,12 @@
   --gradient-start: var(--color-primary);
   --gradient-end: var(--color-secondary);
   --gradient-angle: 135deg;
-  --color-bg-main: #DADED8;   /* Aloe */
+  --color-bg-main: #e6e9de;   /* Aloe */
   --color-bg-card: #ffffff;
   --color-text-primary: #2C3424; /* Moss */
   --color-text-secondary: #768064; /* Olive */
   --color-border: #cccfca;
-  --color-shadow: rgba(44, 52, 36, 0.07);
+  --color-shadow: rgba(44, 52, 36, 0.082);
 }
 
 
