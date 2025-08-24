@@ -1265,7 +1265,6 @@ const QuranApp = () => {
         handleSurahSelect(surah);
         const globalVerseNum = surahStartVerseMap[surah.number] + parah.startingVerseNumber - 1;
         setScrollToVerse(globalVerseNum);
-        setPlayVerseOnLoad(globalVerseNum);
     }
   };
   
@@ -1379,7 +1378,6 @@ const QuranApp = () => {
         setActiveTab('home'); // Switch to home tab to show surah screen
         handleSurahSelect(surah);
         setScrollToVerse(globalVerseNum);
-        setPlayVerseOnLoad(globalVerseNum);
     }
   };
 
@@ -1390,13 +1388,6 @@ const QuranApp = () => {
           if(surahStartVerseMap[surahNum]){
             const globalVerseNum = surahStartVerseMap[surahNum] + lastReadWithData.verseNumberInSurah - 1;
             setScrollToVerse(globalVerseNum);
-            setPlayVerseOnLoad(globalVerseNum);
-             setPlaybackState(prev => ({
-                ...prev,
-                status: 'paused', // Set to paused to prime it for playing
-                surahNumber: surahNum,
-                currentVerseGlobal: globalVerseNum,
-            }));
           }
       }
   };
