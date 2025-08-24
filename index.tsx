@@ -238,7 +238,7 @@ const QARIS = [
     { id: 'ar.mahermuaiqly', name: 'Maher Al Muaqily' },
     { id: 'ar.alafasy', name: 'Mishary Rashid Alafasy' }
 ];
-const THEMES = [{ id: 'serenity', name: 'Serenity' }, { id: 'sunrise', name: 'Sunrise' }, { id: 'majestic', name: 'Majestic' }, { id: 'sepia', name: 'Sepia' }, { id: 'olive', name: 'Olive' }, { id: 'midnight', name: 'Midnight' }];
+const THEMES = [{ id: 'serenity', name: 'Serenity' }, { id: 'sunrise', name: 'Sunrise' }, { id: 'majestic', name: 'Majestic' }, { id: 'sepia', name: 'Sepia' }, { id: 'olive', name: 'Olive' }, { id: 'midnight', name: 'Midnight' }, { id: 'verdant', name: 'Verdant' }, { id: 'twilight', name: 'Twilight' }];
 const ARABIC_FONTS = [
     { id: 'kfgqpc-v2', name: 'KFGQPC V2 (Uthmani)' },
     { id: 'amiri', name: 'Amiri' },
@@ -532,7 +532,7 @@ const SurahList = ({ surahs, settings, onSurahSelect, onPlaySurah, playbackState
             {surah.number}
           </div>
           <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onSurahSelect(surah)}>
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-center">
               <div>
                 <h4 className="font-bold font-poppins truncate">{surah.englishName}</h4>
                 <p className="text-sm text-[var(--color-text-secondary)]">{surah.englishNameTranslation}</p>
@@ -541,7 +541,7 @@ const SurahList = ({ surahs, settings, onSurahSelect, onPlaySurah, playbackState
             </div>
           </div>
           <button onClick={() => onPlaySurah(surah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
-            {playbackState.surahNumber === surah.number && playbackState.status === 'playing' ? <PauseIcon /> : <PlayIcon />}
+            {playbackState.surahNumber === surah.number && playbackState.status === 'playing' ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
           </button>
         </div>
       ))}
@@ -568,7 +568,7 @@ const ParahList = ({ parahs, onParahSelect, onPlayParah, settings, surahData, pl
                             {parah.number}
                         </div>
                         <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onParahSelect(parah)}>
-                            <div className="flex justify-between items-start">
+                            <div className="flex justify-between items-center">
                                 <div>
                                     <h4 className="font-bold font-poppins truncate">{parah.name}</h4>
                                     <p className="text-sm text-[var(--color-text-secondary)]">
@@ -579,7 +579,7 @@ const ParahList = ({ parahs, onParahSelect, onPlayParah, settings, surahData, pl
                             </div>
                         </div>
                          <button onClick={() => onPlayParah(parah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
-                           {isThisParahPlaying ? <PauseIcon /> : <PlayIcon />}
+                           {isThisParahPlaying ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
                         </button>
                     </div>
                 );
@@ -718,10 +718,12 @@ const BookmarksScreen = ({ bookmarks, onBookmarkSelect, onDeleteBookmark, settin
                   <BookmarkIcon className="w-8 h-8 text-[var(--color-primary)] flex-shrink-0" />
                   <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onBookmarkSelect(bookmark)}>
                       <div className="flex justify-between items-center">
-                          <h3 className="font-bold font-poppins truncate">{bookmark.surahEnglishName}: {bookmark.verseNumber}</h3>
+                          <div>
+                            <h3 className="font-bold font-poppins truncate">{bookmark.surahEnglishName}: {bookmark.verseNumber}</h3>
+                            <p className="text-xs text-[var(--color-text-secondary)] mt-1">{formatTimestamp(bookmark.timestamp)}</p>
+                          </div>
                           <p className={`font-${settings.arabicFont} text-xl text-right`}>{bookmark.surahName}</p>
                       </div>
-                      <p className="text-xs text-[var(--color-text-secondary)] mt-1">{formatTimestamp(bookmark.timestamp)}</p>
                   </div>
                   <button
                       onClick={(e) => { e.stopPropagation(); onDeleteBookmark(bookmark.id); }}
@@ -792,7 +794,7 @@ const SettingsScreen = ({ settings, onSettingChange, onReset }) => {
     <div className="p-4 space-y-6">
       <div className="space-y-4 card p-6">
         <h3 className="text-lg font-bold font-poppins">Theme</h3>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {THEMES.map(theme => (
             <div key={theme.id} className="text-center">
               <button
