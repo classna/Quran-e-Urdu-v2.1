@@ -15,12 +15,13 @@ interface Surah {
     revelationType: string;
 }
 
-interface Juz {
+interface Parah {
     number: number;
-    startSurahName: string;
-    startSurahNameArabic: string;
-    surah: number;
-    ayah: number;
+    name: string;
+    englishName: string;
+    arabicName: string;
+    startingSurahNumber: number;
+    startingVerseNumber: number;
 }
 
 interface Verse {
@@ -146,7 +147,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":91,"name":"سُورَةُ ٱلْشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
     {"number":92,"name":"سُورَةُ ٱللَّيْلِ","englishName":"Al-Lail","englishNameTranslation":"The Night","numberOfAyahs":21,"revelationType":"Meccan"},
     {"number":93,"name":"سُورَةُ ٱلضُّحَىٰ","englishName":"Ad-Dhuhaa","englishNameTranslation":"The Morning Hours","numberOfAyahs":11,"revelationType":"Meccan"},
-    {"number":94,"name":"سُورَةُ ٱلشَّرْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
+    {"number":94,"name":"سُورَةُ ٱلشَّרْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
     {"number":95,"name":"سُورَةُ ٱلتِّينِ","englishName":"At-Tin","englishNameTranslation":"The Fig","numberOfAyahs":8,"revelationType":"Meccan"},
     {"number":96,"name":"سُورَةُ ٱلْعَلَقِ","englishName":"Al-Alaq","englishNameTranslation":"The Clot","numberOfAyahs":19,"revelationType":"Meccan"},
     {"number":97,"name":"سُورَةُ ٱلْقَدْرِ","englishName":"Al-Qadr","englishNameTranslation":"The Power, Fate","numberOfAyahs":5,"revelationType":"Meccan"},
@@ -169,6 +170,40 @@ const ALL_SURAHS: Surah[] = [
     {"number":114,"name":"سُورَةُ ٱلنَّاسِ","englishName":"An-Naas","englishNameTranslation":"Mankind","numberOfAyahs":6,"revelationType":"Meccan"}
 ];
 
+// --- STATIC PARAH DATA ---
+const ALL_PARAHS: Parah[] = [
+    { number: 1, name: "Alif-Lam-Mim", englishName: "Juz' 1", arabicName: "الم", startingSurahNumber: 1, startingVerseNumber: 1 },
+    { number: 2, name: "Sayaqūl", englishName: "Juz' 2", arabicName: "سَيَقُولُ", startingSurahNumber: 2, startingVerseNumber: 142 },
+    { number: 3, name: "Tilka -r-Rusul", englishName: "Juz' 3", arabicName: "تِلْكَ الرُّسُلُ", startingSurahNumber: 2, startingVerseNumber: 253 },
+    { number: 4, name: "Lan Tanālū", englishName: "Juz' 4", arabicName: "لَنْ تَنَالُوا", startingSurahNumber: 3, startingVerseNumber: 92 },
+    { number: 5, name: "Wa-l-Muḥṣanāt", englishName: "Juz' 5", arabicName: "وَالْمُحْصَنَاتُ", startingSurahNumber: 4, startingVerseNumber: 24 },
+    { number: 6, name: "Lā Yuḥibbu-llāh", englishName: "Juz' 6", arabicName: "لَا يُحِبُّ اللَّهُ", startingSurahNumber: 4, startingVerseNumber: 148 },
+    { number: 7, name: "Wa Idhā Samiʿū", englishName: "Juz' 7", arabicName: "وَإِذَا سَمِعُوا", startingSurahNumber: 5, startingVerseNumber: 83 },
+    { number: 8, name: "Wa-law Annanā", englishName: "Juz' 8", arabicName: "وَلَوْ أَنَّنَا", startingSurahNumber: 6, startingVerseNumber: 111 },
+    { number: 9, name: "Qāla-l-Mala'", englishName: "Juz' 9", arabicName: "قَالَ الْمَلَأُ", startingSurahNumber: 7, startingVerseNumber: 88 },
+    { number: 10, name: "Wa-ʿlamū", englishName: "Juz' 10", arabicName: "وَاعْلَمُوا", startingSurahNumber: 8, startingVerseNumber: 41 },
+    { number: 11, name: "Yaʿtadhirūn", englishName: "Juz' 11", arabicName: "يَعْتَذِرُونَ", startingSurahNumber: 9, startingVerseNumber: 94 },
+    { number: 12, name: "Wa-mā Min Dābbah", englishName: "Juz' 12", arabicName: "وَمَا مِنْ دَابَّةٍ", startingSurahNumber: 11, startingVerseNumber: 6 },
+    { number: 13, name: "Wa-mā Ubarri'", englishName: "Juz' 13", arabicName: "وَمَا أُبَرِّئُ", startingSurahNumber: 12, startingVerseNumber: 53 },
+    { number: 14, name: "Rubamā", englishName: "Juz' 14", arabicName: "رُبَمَا", startingSurahNumber: 15, startingVerseNumber: 2 },
+    { number: 15, name: "Subḥāna-lladhī", englishName: "Juz' 15", arabicName: "سُبْحَانَ الَّذِي", startingSurahNumber: 17, startingVerseNumber: 1 },
+    { number: 16, name: "Qāla Alam", englishName: "Juz' 16", arabicName: "قَالَ أَلَمْ", startingSurahNumber: 18, startingVerseNumber: 75 },
+    { number: 17, name: "Iqtaraba li-n-Nās", englishName: "Juz' 17", arabicName: "اقْتَرَبَ لِلنَّاسِ", startingSurahNumber: 21, startingVerseNumber: 1 },
+    { number: 18, name: "Qad Aflaḥa", englishName: "Juz' 18", arabicName: "قَدْ أَفْلَحَ", startingSurahNumber: 23, startingVerseNumber: 1 },
+    { number: 19, name: "Wa-qāla-lladhīna", englishName: "Juz' 19", arabicName: "وَقَالَ الَّذِينَ", startingSurahNumber: 25, startingVerseNumber: 21 },
+    { number: 20, name: "Amman Khalaqa", englishName: "Juz' 20", arabicName: "أَمَّنْ خَلَقَ", startingSurahNumber: 27, startingVerseNumber: 60 },
+    { number: 21, name: "Utlu Mā Uḥiya", englishName: "Juz' 21", arabicName: "اتْلُ مَا أُوحِيَ", startingSurahNumber: 29, startingVerseNumber: 45 },
+    { number: 22, name: "Wa-man Yaqnut", englishName: "Juz' 22", arabicName: "وَمَنْ يَقْنُتْ", startingSurahNumber: 33, startingVerseNumber: 31 },
+    { number: 23, name: "Wa-mā Liya", englishName: "Juz' 23", arabicName: "وَمَا لِيَ", startingSurahNumber: 36, startingVerseNumber: 22 },
+    { number: 24, name: "Faman Aẓlam", englishName: "Juz' 24", arabicName: "فَمَنْ أَظْلَمُ", startingSurahNumber: 39, startingVerseNumber: 32 },
+    { number: 25, name: "Ilayhi Yurad", englishName: "Juz' 25", arabicName: "إِلَيْهِ يُرَدُّ", startingSurahNumber: 41, startingVerseNumber: 47 },
+    { number: 26, name: "Ḥā-Mĩm", englishName: "Juz' 26", arabicName: "حٰمٓ", startingSurahNumber: 46, startingVerseNumber: 1 },
+    { number: 27, name: "Qāla Fa-mā Khaṭbukum", englishName: "Juz' 27", arabicName: "قَالَ فَمَا خَطْبُكُمْ", startingSurahNumber: 51, startingVerseNumber: 31 },
+    { number: 28, name: "Qad Samiʿa-llāh", englishName: "Juz' 28", arabicName: "قَدْ سَمِعَ اللَّهُ", startingSurahNumber: 58, startingVerseNumber: 1 },
+    { number: 29, name: "Tabāraka-lladhī", englishName: "Juz' 29", arabicName: "تَبَارَكَ الَّذِي", startingSurahNumber: 67, startingVerseNumber: 1 },
+    { number: 30, name: "ʿAmma Yatasā'alūn", englishName: "Juz' 30", arabicName: "عَمَّ يَتَسَاءَلُونَ", startingSurahNumber: 78, startingVerseNumber: 1 },
+];
+
 // --- ICONS (unchanged) ---
 const PlayIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 0 0 4 4.11V15.89a1.5 1.5 0 0 0 2.3 1.269l9.344-5.89a1.5 1.5 0 0 0 0-2.538L6.3 2.84Z"/></svg>);
 const PauseIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="currentColor" viewBox="0 0 20 20"><path d="M5.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75A.75.75 0 0 0 7.25 3h-1.5ZM12.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75a.75.75 0 0 0-.75-.75h-1.5Z"/></svg>);
@@ -181,6 +216,7 @@ const SettingsIcon = ({ className = "w-6 h-6" }) => (<svg className={className} 
 const ChevronLeftIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>);
 const HeadphonesIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg>);
 const BookIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>);
+const TrashIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.067-2.09 1.02-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>);
 
 
 // --- UTILITIES ---
@@ -196,48 +232,6 @@ const AyahEndSymbol = ({ number }) => (
 );
 
 // --- SETTINGS DATA ---
-const JUZ_START_WORDS = [
-  "الٓمٓ", "سَيَقُولُ ٱلسُّفَهَآءُ", "تِلْكَ ٱلرُّسُلُ", "لَن تَنَالُوا۟ ٱلْبِرَّ", "وَٱلْمُحْصَنَٰتُ",
-  "لَّا يُحِبُّ ٱللَّهُ", "وَإِذَا سَمِعُوا۟", "وَلَوْ أَنَّنَا", "قَالَ ٱلْمَلَأُ", "وَٱعْلَمُوٓا۟",
-  "يَعْتَذِرُونَ", "وَمَا مِن دَآبَّةٍ", "وَمَآ أُبَرِّئُ نَفْسِىٓ", "رُّبَمَا", "سُبْحَٰنَ ٱلَّذِىٓ",
-  "قَالَ أَلَمْ", "ٱقْتَرَبَ لِلNَّاسِ", "قَدْ أَفْلَحَ", "وَقَالَ ٱلَّذِينَ", "أَمَّنْ خَلَقَ",
-  "ٱتْلُ مَآ أُوحِىَ", "وَمَن يَقْنُتْ", "وَمَا لِىَ", "فَمَن أَظْلَمُ", "إِلَيْهِ يُرَدُّ",
-  "حمٓ", "قَالَ فَمَا خَطْبُكُمْ", "قَدْ سَمِعَ ٱللَّهُ", "تَبَٰרَكَ ٱلَّذِى", "عَمَّ يَتَسَآءَلُونَ"
-];
-
-const VERIFIED_JUZ_STARTS = [
-    { surah: 1, ayah: 1 },   // Juz 1
-    { surah: 2, ayah: 142 }, // Juz 2
-    { surah: 2, ayah: 253 }, // Juz 3
-    { surah: 3, ayah: 93 },  // Juz 4
-    { surah: 4, ayah: 24 },  // Juz 5
-    { surah: 4, ayah: 148 }, // Juz 6
-    { surah: 5, ayah: 82 },  // Juz 7
-    { surah: 6, ayah: 111 }, // Juz 8
-    { surah: 7, ayah: 88 },  // Juz 9
-    { surah: 8, ayah: 41 },  // Juz 10
-    { surah: 9, ayah: 93 },  // Juz 11
-    { surah: 11, ayah: 6 },  // Juz 12
-    { surah: 12, ayah: 53 }, // Juz 13
-    { surah: 15, ayah: 1 },  // Juz 14
-    { surah: 17, ayah: 1 },  // Juz 15
-    { surah: 18, ayah: 75 }, // Juz 16
-    { surah: 21, ayah: 1 },  // Juz 17
-    { surah: 23, ayah: 1 },  // Juz 18
-    { surah: 25, ayah: 21 }, // Juz 19
-    { surah: 27, ayah: 56 }, // Juz 20
-    { surah: 29, ayah: 46 }, // Juz 21
-    { surah: 33, ayah: 31 }, // Juz 22
-    { surah: 36, ayah: 28 }, // Juz 23
-    { surah: 39, ayah: 32 }, // Juz 24
-    { surah: 41, ayah: 47 }, // Juz 25
-    { surah: 46, ayah: 1 },  // Juz 26
-    { surah: 51, ayah: 31 }, // Juz 27
-    { surah: 58, ayah: 1 },  // Juz 28
-    { surah: 67, ayah: 1 },  // Juz 29
-    { surah: 78, ayah: 1 }   // Juz 30
-];
-
 const QARIS = [
     { id: 'ar.abdulbasitmurattal', name: 'Abdul Basit Murattal' },
     { id: 'ar.hudhaify', name: 'Ali Al-Hudhaify' },
@@ -275,7 +269,7 @@ const PLAYBACK_SPEEDS = [
 ];
 
 const DEFAULT_SETTINGS = {
-    theme: 'sepia',
+    theme: 'olive',
     translationLanguage: 'urdu',
     qari: 'ar.alafasy',
     translationAudio: 'ur.khan',
@@ -529,8 +523,72 @@ const HomeHeaderCard = ({ playbackState, lastRead, onContinueReading, playingSur
     );
 };
 
+const SurahList = ({ surahs, settings, onSurahSelect, onPlaySurah, playbackState }) => (
+  <div>
+    <div className="space-y-3">
+      {surahs.map((surah, index) => (
+        <div key={surah.number} className="card p-4 flex items-center space-x-4 animate-slideInUp" style={{ animationDelay: `${index * 0.02}s` }}>
+          <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] rounded-full font-bold themed-gradient-text">
+            {surah.number}
+          </div>
+          <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onSurahSelect(surah)}>
+            <div className="flex justify-between items-start">
+              <div>
+                <h4 className="font-bold font-poppins truncate">{surah.englishName}</h4>
+                <p className="text-sm text-[var(--color-text-secondary)]">{surah.englishNameTranslation}</p>
+              </div>
+              <p className={`font-${settings.arabicFont} text-xl`}>{surah.name}</p>
+            </div>
+          </div>
+          <button onClick={() => onPlaySurah(surah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
+            {playbackState.surahNumber === surah.number && playbackState.status === 'playing' ? <PauseIcon /> : <PlayIcon />}
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
-const HomeScreen = ({ surahs, juzs, settings, onSurahSelect, onJuzSelect, onPlaySurah, playbackState, lastRead, onContinueReading, homeView, playingSurah, onTogglePlay, onNavigateToPlayer, currentVerseInSurah }) => {
+const ParahList = ({ parahs, onParahSelect, onPlayParah, settings, surahData, playbackState, playbackContext }) => (
+    <div>
+        <div className="space-y-3">
+            {parahs.map((parah, index) => {
+                const startingSurah = surahData.find(s => s.number === parah.startingSurahNumber);
+                if (!startingSurah) return null;
+
+                const isThisParahPlaying = playbackContext?.type === 'parah' && playbackContext.data.number === parah.number && playbackState.status === 'playing';
+
+                return (
+                    <div
+                        key={parah.number}
+                        className="card p-4 flex items-center space-x-4 animate-slideInUp"
+                        style={{ animationDelay: `${index * 0.02}s` }}
+                    >
+                        <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] rounded-full font-bold themed-gradient-text">
+                            {parah.number}
+                        </div>
+                        <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onParahSelect(parah)}>
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h4 className="font-bold font-poppins truncate">{parah.name}</h4>
+                                    <p className="text-sm text-[var(--color-text-secondary)]">
+                                        {startingSurah.englishName}, Verse {parah.startingVerseNumber}
+                                    </p>
+                                </div>
+                                <p className={`font-${settings.arabicFont} text-xl`}>{parah.arabicName}</p>
+                            </div>
+                        </div>
+                         <button onClick={() => onPlayParah(parah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
+                           {isThisParahPlaying ? <PauseIcon /> : <PlayIcon />}
+                        </button>
+                    </div>
+                );
+            })}
+        </div>
+    </div>
+);
+
+const HomeScreen = ({ homeView, surahs, parahs, settings, onSurahSelect, onParahSelect, onPlaySurah, onPlayParah, playbackState, playbackContext, lastRead, onContinueReading, playingSurah, onTogglePlay, onNavigateToPlayer, currentVerseInSurah }) => {
   return (
     <div className="p-4 space-y-6">
       <HomeHeaderCard 
@@ -543,50 +601,25 @@ const HomeScreen = ({ surahs, juzs, settings, onSurahSelect, onJuzSelect, onPlay
         currentVerseInSurah={currentVerseInSurah}
       />
       
-      <div>
-        {homeView === 'surahs' ? (
-          <div className="space-y-3">
-            {surahs.map((surah, index) => (
-              <div key={surah.number} className="card p-4 flex items-center space-x-4 animate-slideInUp" style={{ animationDelay: `${index * 0.02}s` }}>
-                <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] rounded-full font-bold themed-gradient-text">
-                  {surah.number}
-                </div>
-                <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onSurahSelect(surah)}>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="font-bold font-poppins truncate">{surah.englishName}</h4>
-                      <p className="text-sm text-[var(--color-text-secondary)]">{surah.englishNameTranslation}</p>
-                    </div>
-                    <p className={`font-${settings.arabicFont} text-xl`}>{surah.name}</p>
-                  </div>
-                </div>
-                <button onClick={() => onPlaySurah(surah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
-                  {playbackState.surahNumber === surah.number && playbackState.status === 'playing' ? <PauseIcon /> : <PlayIcon />}
-                </button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="space-y-3">
-              {juzs.map((juz, index) => (
-                  <div key={juz.number} onClick={() => onJuzSelect(juz)} className="card p-4 flex items-center space-x-4 cursor-pointer animate-slideInUp" style={{ animationDelay: `${index * 0.02}s` }}>
-                      <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] rounded-full font-bold themed-gradient-text">
-                          {juz.number}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                           <div className="flex justify-between items-start">
-                              <div>
-                                  <h4 className={`font-${settings.arabicFont} text-2xl font-bold mb-1`}>{JUZ_START_WORDS[juz.number - 1]}</h4>
-                                  <p className="text-sm text-[var(--color-text-secondary)] font-poppins">Juz' {juz.number}</p>
-                              </div>
-                              <p className={`font-${settings.arabicFont} text-xl text-[var(--color-text-secondary)]`}>{juz.startSurahNameArabic}</p>
-                          </div>
-                      </div>
-                  </div>
-              ))}
-          </div>
-        )}
-      </div>
+      {homeView === 'surahs' ? (
+        <SurahList
+          surahs={surahs}
+          settings={settings}
+          onSurahSelect={onSurahSelect}
+          onPlaySurah={onPlaySurah}
+          playbackState={playbackState}
+        />
+      ) : (
+        <ParahList
+            parahs={parahs}
+            onParahSelect={onParahSelect}
+            onPlayParah={onPlayParah}
+            settings={settings}
+            surahData={surahs}
+            playbackState={playbackState}
+            playbackContext={playbackContext}
+        />
+      )}
     </div>
   );
 };
@@ -660,65 +693,6 @@ const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmar
     );
 };
 
-const JuzScreen = ({ juz, verses, settings, onPlayVerse, onBookmark, bookmarks, playbackState, verseRefs, loading, scrollToVerse, onScrollComplete }) => {
-    useEffect(() => {
-        if (scrollToVerse && verses.length > 0 && !loading) {
-            const verseData = verses.find(v => v.number === scrollToVerse);
-            if (verseData && verseRefs.current[verseData.number]) {
-                setTimeout(() => {
-                    verseRefs.current[verseData.number]?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                    });
-                    onScrollComplete();
-                }, 100);
-            }
-        }
-    }, [scrollToVerse, verses, verseRefs, onScrollComplete, loading]);
-    
-    return (
-        <div className="p-4 space-y-4">
-            <div className="card p-6 text-center themed-gradient text-white space-y-2 animate-scaleIn">
-                <h2 className="text-3xl font-bold font-poppins">Juz' {juz.number}</h2>
-                <p className={`text-4xl font-${settings.arabicFont}`}>{JUZ_START_WORDS[juz.number - 1]}</p>
-                {!loading && verses.length > 0 && (
-                     <p className="opacity-90">
-                        {verses[0].surah.englishName}{verses[0].surah.number !== verses[verses.length-1].surah.number ? ` to ${verses[verses.length-1].surah.englishName}` : ''}
-                    </p>
-                )}
-            </div>
-            
-            {loading ? (
-                <div className="flex justify-center items-center pt-20"><LoadingSpinnerIcon/></div>
-            ) : (
-                <div className="space-y-4">
-                    {verses.map((verse, index) => (
-                        <div key={verse.number} ref={el => { verseRefs.current[verse.number] = el; }} className="animate-slideInUp" style={{ animationDelay: `${index * 0.02}s` }}>
-                            {
-                                verse.numberInSurah === 1 && index > 0 && verse.surah.number !== 9 && (
-                                    <p className="bismillah-text-card text-center text-2xl my-4 themed-gradient-text">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
-                                )
-                            }
-                            <VerseCard
-                                verse={verse}
-                                settings={settings}
-                                onPlay={onPlayVerse}
-                                onBookmark={onBookmark}
-                                isBookmarked={bookmarks.some(b => b.id === `${verse.surah.number}-${verse.numberInSurah}`)}
-                                isPlaying={playbackState.currentVerseGlobal === verse.number && playbackState.status === 'playing'}
-                                isLoading={playbackState.loadingVerse === verse.number}
-                                isHighlighted={playbackState.status !== 'stopped' && playbackState.currentVerseGlobal === verse.number}
-                                isFirstVerse={verse.numberInSurah === 1 && verse.surah.number !== 1 && verse.surah.number !== 9}
-                                isTranslationPlaying={playbackState.currentVerseGlobal === verse.number && playbackState.stage === 'translation' && playbackState.status === 'playing'}
-                            />
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-};
-
 const formatTimestamp = (timestamp: number) => {
   if (!timestamp) return '';
   const date = new Date(timestamp);
@@ -732,21 +706,30 @@ const formatTimestamp = (timestamp: number) => {
   });
 };
 
-const BookmarksScreen = ({ bookmarks, onBookmarkSelect, settings }) => {
+const BookmarksScreen = ({ bookmarks, onBookmarkSelect, onDeleteBookmark, settings }) => {
   const sortedBookmarks = [...bookmarks].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold font-poppins mb-4">Bookmarks</h2>
       {sortedBookmarks.length > 0 ? (
         <div className="space-y-3">
           {sortedBookmarks.map((bookmark, index) => (
-              <div key={bookmark.id} onClick={() => onBookmarkSelect(bookmark)} className="card p-4 cursor-pointer animate-slideInUp" style={{ animationDelay: `${index * 0.03}s` }}>
-                <div className="flex justify-between items-center">
-                    <h3 className="font-bold font-poppins truncate">{bookmark.surahEnglishName}: {bookmark.verseNumber}</h3>
-                    <p className={`font-${settings.arabicFont} text-xl text-right`}>{bookmark.surahName}</p>
-                </div>
-                <p className="text-xs text-[var(--color-text-secondary)] mt-1">{formatTimestamp(bookmark.timestamp)}</p>
+              <div key={bookmark.id} className="card p-4 flex items-center space-x-4 animate-slideInUp" style={{ animationDelay: `${index * 0.03}s` }}>
+                  <BookmarkIcon className="w-8 h-8 text-[var(--color-primary)] flex-shrink-0" />
+                  <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onBookmarkSelect(bookmark)}>
+                      <div className="flex justify-between items-center">
+                          <h3 className="font-bold font-poppins truncate">{bookmark.surahEnglishName}: {bookmark.verseNumber}</h3>
+                          <p className={`font-${settings.arabicFont} text-xl text-right`}>{bookmark.surahName}</p>
+                      </div>
+                      <p className="text-xs text-[var(--color-text-secondary)] mt-1">{formatTimestamp(bookmark.timestamp)}</p>
+                  </div>
+                  <button
+                      onClick={(e) => { e.stopPropagation(); onDeleteBookmark(bookmark.id); }}
+                      className="p-2 rounded-full text-red-500/70 hover:bg-red-500/10 hover:text-red-500 transition-colors"
+                      aria-label={`Delete bookmark for ${bookmark.surahEnglishName} verse ${bookmark.verseNumber}`}
+                  >
+                      <TrashIcon className="w-6 h-6" />
+                  </button>
               </div>
             )
           )}
@@ -765,7 +748,6 @@ const BookmarksScreen = ({ bookmarks, onBookmarkSelect, settings }) => {
 
 const SearchScreen = () => (
     <div className="p-4">
-        <h2 className="text-2xl font-bold font-poppins mb-4">Search</h2>
         <div className="relative">
           <input 
             type="text"
@@ -910,21 +892,9 @@ const QuranApp = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [homeView, setHomeView] = useState('surahs');
   const [selectedSurah, setSelectedSurah] = useState<Surah | null>(null);
-  const [selectedJuz, setSelectedJuz] = useState<Juz | null>(null);
   
   const [surahs, setSurahs] = useState<Surah[]>(ALL_SURAHS);
-  const [juzs, setJuzs] = useState<Juz[]>(() => 
-      VERIFIED_JUZ_STARTS.map((start, index) => {
-          const surahInfo = ALL_SURAHS.find(s => s.number === start.surah);
-          return {
-              number: index + 1,
-              surah: start.surah,
-              ayah: start.ayah,
-              startSurahName: surahInfo ? surahInfo.englishName : '',
-              startSurahNameArabic: surahInfo ? surahInfo.name : '',
-          };
-      })
-  );
+  const [parahs, setParahs] = useState<Parah[]>(ALL_PARAHS);
 
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(false);
@@ -945,7 +915,7 @@ const QuranApp = () => {
     loadingVerse: null,
     stage: 'arabic', // 'arabic' or 'translation'
   });
-  const [playbackContext, setPlaybackContext] = useState<{ type: 'surah' | 'juz', data: Surah | Juz } | null>(null);
+  const [playbackContext, setPlaybackContext] = useState<{ type: 'surah' | 'parah', data: Surah | Parah } | null>(null);
 
   const audioRef = useRef < HTMLAudioElement | null > (null);
   const verseRefs = useRef < Record < number, HTMLDivElement | null >> ({});
@@ -960,7 +930,7 @@ const QuranApp = () => {
   // --- Effects ---
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [activeTab]);
+  }, [activeTab, selectedSurah]);
 
   useEffect(() => {
     // App-wide cleanup
@@ -1080,36 +1050,16 @@ const QuranApp = () => {
     return map;
   }, [surahs]);
 
-  const juzBoundaries = useMemo(() => {
-    if (surahs.length === 0) return [];
-    const surahAyahCounts = surahs.reduce((acc, s) => ({ ...acc, [s.number]: s.numberOfAyahs }), {});
-    
-    return VERIFIED_JUZ_STARTS.map((start, index) => {
-      let end;
-      if (index === VERIFIED_JUZ_STARTS.length - 1) {
-        end = { surah: 114, ayah: 6 };
-      } else {
-        const nextStart = VERIFIED_JUZ_STARTS[index + 1];
-        if (nextStart.ayah === 1) {
-          const prevSurahNumber = nextStart.surah - 1;
-          end = { surah: prevSurahNumber, ayah: surahAyahCounts[prevSurahNumber] };
-        } else {
-          end = { surah: nextStart.surah, ayah: nextStart.ayah - 1 };
-        }
-      }
-      return { start, end };
-    });
-  }, [surahs]);
-
-  const loadVerses = useCallback(async ({ surah, juz }: { surah?: Surah, juz?: Juz }) => {
+  const loadVerses = useCallback(async ({ surah }: { surah?: Surah }) => {
+    if (!surah) return null;
     setLoading(true);
     setVerses([]);
     verseRefs.current = {};
     preloadedUrlsRef.current.clear();
 
     const fetchFromAlquranCloud = async () => {
-      const type = surah ? 'surah' : 'juz';
-      const number = surah ? surah.number : juz!.number;
+      const type = 'surah';
+      const number = surah.number;
       
       const [arabicRes, englishRes, urduRes] = await Promise.all([
         fetch(`https://api.alquran.cloud/v1/${type}/${number}/quran-uthmani`),
@@ -1151,32 +1101,7 @@ const QuranApp = () => {
             }));
         };
 
-        if (surah) {
-            return await fetchSurah(surah.number);
-        }
-
-        if (juz) {
-            const boundary = juzBoundaries[juz.number - 1];
-            if (!boundary) throw new Error("Juz boundary not found");
-            const { start, end } = boundary;
-            let allJuzVerses = [];
-
-            for (let sNum = start.surah; sNum <= end.surah; sNum++) {
-                const surahData = surahs.find(s => s.number === sNum);
-                const surahVerses = await fetchSurah(sNum);
-                
-                const startAyah = (sNum === start.surah) ? start.ayah : 1;
-                const endAyah = (sNum === end.surah) ? end.ayah : surahData.numberOfAyahs;
-
-                const filteredVerses = surahVerses.filter(v => 
-                    v.numberInSurah >= startAyah && v.numberInSurah <= endAyah
-                );
-                allJuzVerses.push(...filteredVerses);
-            }
-            return allJuzVerses;
-        }
-        
-        throw new Error("Invalid parameters for fetchFromQuranCom");
+        return await fetchSurah(surah.number);
     };
     
     try {
@@ -1196,7 +1121,7 @@ const QuranApp = () => {
     } finally {
         setLoading(false);
     }
-  }, [surahs, surahStartVerseMap, juzBoundaries]);
+  }, [surahs, surahStartVerseMap]);
 
 
   // --- Audio Logic ---
@@ -1330,24 +1255,22 @@ const QuranApp = () => {
         loadVerses({ surah });
     }
     setSelectedSurah(surah);
-    setSelectedJuz(null);
-    setActiveTab('surah');
   };
   
-  const handleJuzSelect = (juz: Juz, options: { isNavigation?: boolean } = {}) => {
-    if (!options.isNavigation) {
-        stopPlayback();
-        loadVerses({ juz });
+  const handleParahSelect = (parah: Parah) => {
+    const surah = surahs.find(s => s.number === parah.startingSurahNumber);
+    if (surah) {
+        handleSurahSelect(surah);
+        const globalVerseNum = surahStartVerseMap[surah.number] + parah.startingVerseNumber - 1;
+        setScrollToVerse(globalVerseNum);
+        setPlayVerseOnLoad(globalVerseNum);
     }
-    setSelectedJuz(juz);
-    setSelectedSurah(null);
-    setActiveTab('juz');
   };
-
+  
   const handleScrollComplete = useCallback(() => setScrollToVerse(null), []);
 
-  const handlePlaySurah = async (surah) => {
-    if (playbackState.surahNumber === surah.number && playbackContext?.type === 'surah' && (playbackContext.data as Surah).number === surah.number) {
+  const handlePlaySurah = async (surah: Surah) => {
+    if (playbackContext?.type === 'surah' && (playbackContext.data as Surah).number === surah.number) {
         setPlaybackState(p => ({ ...p, status: p.status === 'playing' ? 'paused' : 'playing' }));
         return;
     }
@@ -1364,20 +1287,51 @@ const QuranApp = () => {
     }
   };
 
+  const handlePlayParah = async (parah: Parah) => {
+    if (playbackContext?.type === 'parah' && (playbackContext.data as Parah).number === parah.number) {
+        setPlaybackState(p => ({ ...p, status: p.status === 'playing' ? 'paused' : 'playing' }));
+        return;
+    }
+
+    stopPlayback();
+    setPlaybackContext({ type: 'parah', data: parah });
+
+    const surahToLoad = surahs.find(s => s.number === parah.startingSurahNumber);
+    if (!surahToLoad) return;
+
+    const targetVerses = (verses.length > 0 && verses[0].surah.number === surahToLoad.number)
+        ? verses
+        : await loadVerses({ surah: surahToLoad });
+
+    if (targetVerses && targetVerses.length > 0) {
+        const startingVerseIndex = targetVerses.findIndex(v => v.numberInSurah === parah.startingVerseNumber);
+
+        if (startingVerseIndex !== -1) {
+            handleSurahSelect(surahToLoad, { isNavigation: true });
+            setScrollToVerse(targetVerses[startingVerseIndex].number);
+            
+            setPlaybackState({
+                surahNumber: surahToLoad.number,
+                currentVerseIndex: startingVerseIndex,
+                status: 'playing',
+                loadingVerse: null,
+                currentVerseGlobal: targetVerses[startingVerseIndex].number,
+                stage: 'arabic'
+            });
+        }
+    }
+  };
+
   const handlePlaySingleVerse = useCallback((verse: Verse) => {
     const verseIndex = verses.findIndex(v => v.number === verse.number);
     if (verseIndex === -1) return;
 
     setPlaybackState(p => {
         if (p.currentVerseGlobal === verse.number) {
-            // Toggle play/pause for the currently selected verse
             return { ...p, status: p.status === 'playing' ? 'paused' : 'playing' };
         } else {
-            // Set context before playing a new verse
-            if (activeTab === 'surah' && selectedSurah) {
+            if (selectedSurah) {
                 setPlaybackContext({ type: 'surah', data: selectedSurah });
-            } else if (activeTab === 'juz' && selectedJuz) {
-                setPlaybackContext({ type: 'juz', data: selectedJuz });
             }
             
             return {
@@ -1390,7 +1344,7 @@ const QuranApp = () => {
             };
         }
     });
-  }, [verses, activeTab, selectedSurah, selectedJuz]);
+  }, [verses, selectedSurah]);
   
   const toggleBookmark = useCallback((verse: Verse) => {
     const id = `${verse.surah.number}-${verse.numberInSurah}`;
@@ -1412,10 +1366,15 @@ const QuranApp = () => {
     );
   }, [setBookmarks]);
   
+  const handleDeleteBookmark = useCallback((bookmarkId: string) => {
+    setBookmarks(prev => prev.filter(b => b.id !== bookmarkId));
+  }, [setBookmarks]);
+
   const handleBookmarkSelect = (bookmark: Bookmark) => {
     const surah = surahs.find(s => s.number === bookmark.surahNumber);
     if (surah) {
         const globalVerseNum = bookmark.globalVerseNumber;
+        setActiveTab('home'); // Switch to home tab to show surah screen
         handleSurahSelect(surah);
         setScrollToVerse(globalVerseNum);
         setPlayVerseOnLoad(globalVerseNum);
@@ -1443,10 +1402,11 @@ const QuranApp = () => {
   const handleNavigateToPlayer = () => {
     if (!playbackContext || !playbackState.currentVerseGlobal) return;
 
-    if (playbackContext.type === 'surah') {
-        handleSurahSelect(playbackContext.data as Surah, { isNavigation: true });
-    } else if (playbackContext.type === 'juz') {
-        handleJuzSelect(playbackContext.data as Juz, { isNavigation: true });
+    if (playbackContext.type === 'surah' || playbackContext.type === 'parah') {
+        const surahData = playbackContext.type === 'surah' 
+            ? playbackContext.data as Surah 
+            : surahs.find(s => s.number === (playbackContext.data as Parah).startingSurahNumber);
+        if (surahData) handleSurahSelect(surahData, { isNavigation: true });
     }
     
     setScrollToVerse(playbackState.currentVerseGlobal);
@@ -1468,81 +1428,111 @@ const QuranApp = () => {
   }, [lastRead, surahs]);
 
   const playingSurah = playbackState.currentVerseGlobal ? surahs.find(s => s.number === playbackState.surahNumber) : null;
+  
+  const currentVerseInSurahForPlayer = useMemo(() => {
+    if (playbackState.status === 'stopped' || !verses.length || !playbackState.currentVerseGlobal) {
+        return lastReadWithData?.verseNumberInSurah;
+    }
+    const currentVerseData = verses.find(v => v.number === playbackState.currentVerseGlobal);
+    return currentVerseData?.numberInSurah;
+  }, [playbackState.status, playbackState.currentVerseGlobal, verses, lastReadWithData]);
+
 
   const isPlayerUiVisible = useMemo(() => {
-    if (activeTab === 'home' || !playingSurah || playbackState.status === 'stopped' || activeTab === 'settings') {
-        return false;
-    }
-    if (playbackContext?.type === 'surah' && activeTab === 'surah' && selectedSurah?.number === (playbackContext.data as Surah).number) {
-        return false;
-    }
-    if (playbackContext?.type === 'juz' && activeTab === 'juz' && selectedJuz?.number === (playbackContext.data as Juz).number) {
-        return false;
-    }
-    return true;
-  }, [activeTab, selectedSurah, selectedJuz, playingSurah, playbackState.status, playbackContext]);
+      if (playbackState.status === 'stopped' || !playingSurah) return false;
+      if (activeTab === 'settings') return false;
+
+      // Hide on the SurahScreen that is currently the playback context
+      if (activeTab === 'home' && selectedSurah) {
+          if (playbackContext?.type === 'surah' && selectedSurah.number === (playbackContext.data as Surah).number) return false;
+          if (playbackContext?.type === 'parah' && selectedSurah.number === (playbackContext.data as Parah).startingSurahNumber) return false;
+      }
+
+      // Hide on home screen list view (as it has its own player card)
+      if (activeTab === 'home' && !selectedSurah) return false;
+
+      return true;
+  }, [activeTab, selectedSurah, playingSurah, playbackState.status, playbackContext]);
 
   // --- Render Logic ---
   const renderContent = () => {
     switch (activeTab) {
-      case 'home': return <HomeScreen 
-          homeView={homeView} 
+      case 'home': 
+        if (selectedSurah) {
+          return <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} />;
+        }
+        return <HomeScreen 
+          homeView={homeView}
+          parahs={parahs}
           surahs={surahs} 
-          juzs={juzs} 
           settings={settings} 
           onSurahSelect={handleSurahSelect} 
-          onJuzSelect={handleJuzSelect} 
+          onParahSelect={handleParahSelect}
           onPlaySurah={handlePlaySurah} 
-          playbackState={playbackState} 
+          onPlayParah={handlePlayParah}
+          playbackState={playbackState}
+          playbackContext={playbackContext}
           lastRead={lastReadWithData} 
           onContinueReading={handleContinueReading} 
           playingSurah={playingSurah}
           onTogglePlay={handleTogglePlayPause}
           onNavigateToPlayer={handleNavigateToPlayer}
-          currentVerseInSurah={lastReadWithData?.verseNumberInSurah}
+          currentVerseInSurah={currentVerseInSurahForPlayer}
       />;
-      case 'surah': return selectedSurah ? <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} /> : null;
-      case 'juz': return selectedJuz ? <JuzScreen loading={loading} juz={selectedJuz} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} /> : null;
-      case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} settings={settings} />;
+      case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} onDeleteBookmark={handleDeleteBookmark} settings={settings} />;
       case 'search': return <SearchScreen />;
       case 'settings': return <SettingsScreen settings={settings} onSettingChange={handleSettingChange} onReset={() => setShowResetConfirmModal(true)} />;
       default: return <HomeScreen 
-          homeView={homeView} 
+          homeView={homeView}
+          parahs={parahs}
           surahs={surahs} 
-          juzs={juzs} 
           settings={settings} 
           onSurahSelect={handleSurahSelect} 
-          onJuzSelect={handleJuzSelect} 
+          onParahSelect={handleParahSelect}
           onPlaySurah={handlePlaySurah} 
-          playbackState={playbackState} 
+          onPlayParah={handlePlayParah}
+          playbackState={playbackState}
+          playbackContext={playbackContext} 
           lastRead={lastReadWithData} 
           onContinueReading={handleContinueReading} 
           playingSurah={playingSurah}
           onTogglePlay={handleTogglePlayPause}
           onNavigateToPlayer={handleNavigateToPlayer}
-          currentVerseInSurah={lastReadWithData?.verseNumberInSurah}
+          currentVerseInSurah={currentVerseInSurahForPlayer}
       />;
     }
   };
 
   const getHeaderTitle = () => {
-    if (activeTab === 'home') return 'Quran-e-Urdu';
+    if (activeTab === 'home') {
+        return selectedSurah ? selectedSurah.englishName : 'Quran-e-Urdu';
+    }
+    if (activeTab === 'bookmarks') return 'Bookmarks';
+    if (activeTab === 'search') return 'Search';
     if (activeTab === 'settings') return 'Settings';
-    if (activeTab === 'surah' && selectedSurah) return selectedSurah.englishName;
-    if (activeTab === 'juz' && selectedJuz) return `Juz' ${selectedJuz.number}`;
     return 'Quran-e-Urdu';
+  };
+
+  const getOnBackAction = () => {
+    if (activeTab === 'home' && selectedSurah) {
+        return () => setSelectedSurah(null);
+    }
+    if (['bookmarks', 'search', 'settings'].includes(activeTab)) {
+        return () => setActiveTab('home');
+    }
+    return null;
   };
   
   return (
     <div className="app-container min-h-screen" data-theme={settings.theme}>
       <Header
         title={getHeaderTitle()}
-        onBack={(activeTab === 'surah' || activeTab === 'juz') ? () => setActiveTab('home') : null}
-        icon={activeTab === 'home' ? <BookIcon className="w-7 h-7 text-[var(--color-primary)]" /> : null}
+        onBack={getOnBackAction()}
+        icon={(activeTab === 'home' && !selectedSurah) ? <BookIcon className="w-7 h-7 text-[var(--color-primary)]" /> : null}
       >
-        {activeTab === 'home' && (
+        {(activeTab === 'home' && !selectedSurah) && (
             <SegmentedControl 
-                options={[{id: 'surahs', label: 'Surahs'}, {id: 'juz', label: "Juz'"}]}
+                options={[{id: 'surahs', label: 'Surahs'}, {id: 'parah', label: "Parah"}]}
                 activeOption={homeView}
                 onOptionClick={setHomeView}
             />
@@ -1555,7 +1545,7 @@ const QuranApp = () => {
           status={playbackState.status}
           onTogglePlay={handleTogglePlayPause}
           onNavigate={handleNavigateToPlayer}
-          currentVerseInSurah={lastReadWithData?.verseNumberInSurah}
+          currentVerseInSurah={currentVerseInSurahForPlayer}
         />
       }
 
