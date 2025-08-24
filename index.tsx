@@ -389,9 +389,10 @@ interface VerseCardProps {
   isHighlighted: boolean;
   isFirstVerse: boolean;
   isTranslationPlaying: boolean;
+  isSpeciallyHighlighted: boolean;
 }
 
-const VerseCard = React.memo(({ verse, settings, onPlay, onBookmark, isBookmarked, isPlaying, isLoading, isHighlighted, isFirstVerse, isTranslationPlaying }: VerseCardProps) => {
+const VerseCard = React.memo(({ verse, settings, onPlay, onBookmark, isBookmarked, isPlaying, isLoading, isHighlighted, isFirstVerse, isTranslationPlaying, isSpeciallyHighlighted }: VerseCardProps) => {
     const bismillah = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
     let verseText = verse.text;
 
@@ -402,8 +403,14 @@ const VerseCard = React.memo(({ verse, settings, onPlay, onBookmark, isBookmarke
     const handleBookmark = useCallback(() => onBookmark(verse), [onBookmark, verse]);
     const handlePlay = useCallback(() => onPlay(verse), [onPlay, verse]);
 
+    const highlightClass = isSpeciallyHighlighted
+      ? 'bg-[color-mix(in_srgb,_var(--color-primary)_20%,_transparent)]'
+      : isHighlighted
+      ? 'bg-[color-mix(in_srgb,_var(--color-primary)_8%,_transparent)]'
+      : '';
+
     return (
-      <div className={`p-4 rounded-2xl transition-all duration-300 ${isHighlighted ? 'bg-[color-mix(in_srgb,_var(--color-primary)_8%,_transparent)] ' : ''}`}>
+      <div className={`p-4 rounded-2xl transition-all duration-500 ${highlightClass}`}>
         <div className="flex justify-between items-center mb-4">
           <span className="font-bold text-sm themed-gradient-text">
             {verse.surah.englishName} {verse.numberInSurah}
@@ -632,7 +639,7 @@ const HomeScreen = ({ homeView, surahs, parahs, settings, onSurahSelect, onParah
   );
 };
 
-const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmarks, playbackState, verseRefs, scrollToVerse, onScrollComplete, loading, playVerseOnLoad, setPlayVerseOnLoad }) => {
+const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmarks, playbackState, verseRefs, scrollToVerse, onScrollComplete, loading, playVerseOnLoad, setPlayVerseOnLoad, highlightedVerse, setHighlightedVerse }) => {
     useEffect(() => {
         if (scrollToVerse && verses.length > 0 && !loading) {
             const verseData = verses.find(v => v.number === scrollToVerse);
@@ -640,7 +647,7 @@ const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmar
                 setTimeout(() => {
                     verseRefs.current[verseData.number]?.scrollIntoView({
                         behavior: 'smooth',
-                        block: 'center',
+                        block: 'start',
                     });
                     onScrollComplete();
                 }, 100); 
@@ -657,6 +664,15 @@ const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmar
             }
         }
     }, [playVerseOnLoad, verses, loading, onPlayVerse, setPlayVerseOnLoad]);
+    
+    useEffect(() => {
+        if (highlightedVerse) {
+            const timer = setTimeout(() => {
+                setHighlightedVerse(null);
+            }, 3000); // Highlight for 3 seconds
+            return () => clearTimeout(timer);
+        }
+    }, [highlightedVerse, setHighlightedVerse]);
 
 
     return (
@@ -680,7 +696,7 @@ const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmar
             ) : (
                 <div className="space-y-4">
                     {verses.map((verse, index) => (
-                        <div key={verse.number} ref={el => { verseRefs.current[verse.number] = el; }} className="animate-slideInUp" style={{ animationDelay: `${index * 0.02}s` }}>
+                        <div key={verse.number} ref={el => { verseRefs.current[verse.number] = el; }} className="animate-slideInUp" style={{ scrollMarginTop: '5rem', animationDelay: `${index * 0.02}s` }}>
                             <VerseCard
                                 verse={verse}
                                 settings={settings}
@@ -692,6 +708,7 @@ const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmar
                                 isHighlighted={playbackState.status !== 'stopped' && playbackState.currentVerseGlobal === verse.number}
                                 isFirstVerse={index === 0 && surah.number !== 1 && surah.number !== 9}
                                 isTranslationPlaying={playbackState.currentVerseGlobal === verse.number && playbackState.stage === 'translation' && playbackState.status === 'playing'}
+                                isSpeciallyHighlighted={highlightedVerse === verse.number}
                             />
                         </div>
                     ))}
@@ -909,6 +926,7 @@ const QuranApp = () => {
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(false);
   const [scrollToVerse, setScrollToVerse] = useState<number | null>(null);
+  const [highlightedVerse, setHighlightedVerse] = useState<number | null>(null);
   const [showResetConfirmModal, setShowResetConfirmModal] = useState(false);
   const [playVerseOnLoad, setPlayVerseOnLoad] = useState<number | null>(null);
   
@@ -1273,6 +1291,7 @@ const QuranApp = () => {
         handleSurahSelect(surah, { isNavigation: true });
         const globalVerseNum = surahStartVerseMap[surah.number] + parah.startingVerseNumber - 1;
         setScrollToVerse(globalVerseNum);
+        setHighlightedVerse(globalVerseNum);
         loadVerses({ surah });
     }
   };
@@ -1376,6 +1395,7 @@ const QuranApp = () => {
         setActiveTab('home'); // Switch to home tab to show surah screen
         handleSurahSelect(surah);
         setScrollToVerse(globalVerseNum);
+        setHighlightedVerse(globalVerseNum);
     }
   };
 
@@ -1386,6 +1406,7 @@ const QuranApp = () => {
           if(surahStartVerseMap[surahNum]){
             const globalVerseNum = surahStartVerseMap[surahNum] + lastReadWithData.verseNumberInSurah - 1;
             setScrollToVerse(globalVerseNum);
+            setHighlightedVerse(globalVerseNum);
           }
       }
   };
@@ -1450,7 +1471,7 @@ const QuranApp = () => {
     switch (activeTab) {
       case 'home': 
         if (selectedSurah) {
-          return <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} />;
+          return <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} highlightedVerse={highlightedVerse} setHighlightedVerse={setHighlightedVerse} />;
         }
         return <HomeScreen 
           homeView={homeView}
