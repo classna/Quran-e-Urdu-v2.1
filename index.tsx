@@ -289,7 +289,15 @@ const usePersistentState = <T,>(key: string, defaultValue: T): [T, React.Dispatc
   const [state, setState] = useState<T>(() => {
     try {
       const storedValue = localStorage.getItem(key);
-      return storedValue ? JSON.parse(storedValue) : defaultValue;
+      if (storedValue) {
+        const parsedValue = JSON.parse(storedValue);
+        // If defaultValue is an object (and not an array or null), merge them to ensure new keys are added.
+        if (typeof defaultValue === 'object' && defaultValue !== null && !Array.isArray(defaultValue)) {
+          return { ...defaultValue, ...parsedValue };
+        }
+        return parsedValue;
+      }
+      return defaultValue;
     } catch (error) {
       console.error("Error reading from localStorage", error);
       return defaultValue;
@@ -1262,9 +1270,10 @@ const QuranApp = () => {
   const handleParahSelect = (parah: Parah) => {
     const surah = surahs.find(s => s.number === parah.startingSurahNumber);
     if (surah) {
-        handleSurahSelect(surah);
+        handleSurahSelect(surah, { isNavigation: true });
         const globalVerseNum = surahStartVerseMap[surah.number] + parah.startingVerseNumber - 1;
         setScrollToVerse(globalVerseNum);
+        loadVerses({ surah });
     }
   };
   
@@ -1299,26 +1308,15 @@ const QuranApp = () => {
 
     const surahToLoad = surahs.find(s => s.number === parah.startingSurahNumber);
     if (!surahToLoad) return;
-
-    const targetVerses = (verses.length > 0 && verses[0].surah.number === surahToLoad.number)
-        ? verses
-        : await loadVerses({ surah: surahToLoad });
+    
+    const targetVerses = await loadVerses({ surah: surahToLoad });
+    handleSurahSelect(surahToLoad, { isNavigation: true });
 
     if (targetVerses && targetVerses.length > 0) {
         const startingVerseIndex = targetVerses.findIndex(v => v.numberInSurah === parah.startingVerseNumber);
 
         if (startingVerseIndex !== -1) {
-            handleSurahSelect(surahToLoad, { isNavigation: true });
-            setScrollToVerse(targetVerses[startingVerseIndex].number);
-            
-            setPlaybackState({
-                surahNumber: surahToLoad.number,
-                currentVerseIndex: startingVerseIndex,
-                status: 'playing',
-                loadingVerse: null,
-                currentVerseGlobal: targetVerses[startingVerseIndex].number,
-                stage: 'arabic'
-            });
+            setPlayVerseOnLoad(targetVerses[startingVerseIndex].number);
         }
     }
   };
