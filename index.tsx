@@ -204,7 +204,7 @@ const ALL_PARAHS: Parah[] = [
     { number: 30, name: "ʿAmma Yatasā'alūn", englishName: "Juz' 30", arabicName: "عَمَّ يَتَسَاءَلُونَ", startingSurahNumber: 78, startingVerseNumber: 1 },
 ];
 
-// --- ICONS (unchanged) ---
+// --- ICONS ---
 const PlayIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 0 0 4 4.11V15.89a1.5 1.5 0 0 0 2.3 1.269l9.344-5.89a1.5 1.5 0 0 0 0-2.538L6.3 2.84Z"/></svg>);
 const PauseIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="currentColor" viewBox="0 0 20 20"><path d="M5.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75A.75.75 0 0 0 7.25 3h-1.5ZM12.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75a.75.75 0 0 0-.75-.75h-1.5Z"/></svg>);
 const LoadingSpinnerIcon = () => (<div className="w-8 h-8 border-4 border-gray-300 border-t-[var(--color-primary)] rounded-full animate-spin"></div>);
@@ -217,6 +217,7 @@ const ChevronLeftIcon = ({ className = "w-6 h-6" }) => (<svg className={classNam
 const HeadphonesIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg>);
 const BookIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>);
 const TrashIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.067-2.09 1.02-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>);
+const CloseIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>);
 
 
 // --- UTILITIES ---
@@ -438,9 +439,16 @@ const VerseCard = React.memo(({ verse, settings, onPlay, onBookmark, isBookmarke
 });
 
 
-const StickyPlayer = ({ surah, status, onTogglePlay, onNavigate, currentVerseInSurah }) => (
+const StickyPlayer = ({ surah, status, onTogglePlay, onNavigate, currentVerseInSurah, onClose }) => (
   <div className="p-4 sticky top-16 z-30 animate-fadeInDown">
     <div onClick={onNavigate} className="card p-4 themed-gradient text-white relative overflow-hidden cursor-pointer flex items-center justify-between">
+      <button 
+        onClick={(e) => { e.stopPropagation(); onClose(); }}
+        className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white z-20 transition-colors"
+        aria-label="Stop playback"
+      >
+        <CloseIcon className="w-4 h-4" />
+      </button>
       <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/10 rounded-full"></div>
       <div className="relative z-10 flex-1 min-w-0">
           <p className="font-semibold text-sm opacity-80 mb-1">NOW PLAYING</p>
@@ -606,15 +614,17 @@ const ParahList = ({ parahs, onParahSelect, onPlayParah, settings, surahData, pl
 const HomeScreen = ({ homeView, surahs, parahs, settings, onSurahSelect, onParahSelect, onPlaySurah, onPlayParah, playbackState, playbackContext, lastRead, onContinueReading, playingSurah, onTogglePlay, onNavigateToPlayer, currentVerseInSurah }) => {
   return (
     <div className="p-4 space-y-6">
-      <HomeHeaderCard 
-        playbackState={playbackState}
-        lastRead={lastRead}
-        onContinueReading={onContinueReading}
-        playingSurah={playingSurah}
-        onTogglePlay={onTogglePlay}
-        onNavigateToPlayer={onNavigateToPlayer}
-        currentVerseInSurah={currentVerseInSurah}
-      />
+      {homeView === 'surahs' && (
+        <HomeHeaderCard 
+          playbackState={playbackState}
+          lastRead={lastRead}
+          onContinueReading={onContinueReading}
+          playingSurah={playingSurah}
+          onTogglePlay={onTogglePlay}
+          onNavigateToPlayer={onNavigateToPlayer}
+          currentVerseInSurah={currentVerseInSurah}
+        />
+      )}
       
       {homeView === 'surahs' ? (
         <SurahList
@@ -1454,17 +1464,14 @@ const QuranApp = () => {
       if (playbackState.status === 'stopped' || !playingSurah) return false;
       if (activeTab === 'settings') return false;
 
-      // Hide on the SurahScreen that is currently the playback context
-      if (activeTab === 'home' && selectedSurah) {
-          if (playbackContext?.type === 'surah' && selectedSurah.number === (playbackContext.data as Surah).number) return false;
-          if (playbackContext?.type === 'parah' && selectedSurah.number === (playbackContext.data as Parah).startingSurahNumber) return false;
+      // Hide on home screen (which has its own integrated player card) and on any Surah screen.
+      if (activeTab === 'home') {
+          return false;
       }
-
-      // Hide on home screen list view (as it has its own player card)
-      if (activeTab === 'home' && !selectedSurah) return false;
-
+      
+      // Show on other tabs like Bookmarks, Search
       return true;
-  }, [activeTab, selectedSurah, playingSurah, playbackState.status, playbackContext]);
+  }, [activeTab, playingSurah, playbackState.status]);
 
   // --- Render Logic ---
   const renderContent = () => {
@@ -1558,6 +1565,7 @@ const QuranApp = () => {
           onTogglePlay={handleTogglePlayPause}
           onNavigate={handleNavigateToPlayer}
           currentVerseInSurah={currentVerseInSurahForPlayer}
+          onClose={stopPlayback}
         />
       }
 
