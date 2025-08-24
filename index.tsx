@@ -1461,17 +1461,27 @@ const QuranApp = () => {
 
 
   const isPlayerUiVisible = useMemo(() => {
-      if (playbackState.status === 'stopped' || !playingSurah) return false;
-      if (activeTab === 'settings') return false;
+    if (playbackState.status === 'stopped' || !playingSurah) return false;
+    
+    // Always hide on settings screen
+    if (activeTab === 'settings') return false;
 
-      // Hide on home screen (which has its own integrated player card) and on any Surah screen.
-      if (activeTab === 'home') {
-          return false;
-      }
-      
-      // Show on other tabs like Bookmarks, Search
-      return true;
-  }, [activeTab, playingSurah, playbackState.status]);
+    // Determine if we are on a page where the player should be hidden
+    const isSurahDetailPage = activeTab === 'home' && selectedSurah;
+    const isParahListPage = activeTab === 'home' && !selectedSurah && homeView === 'parah';
+
+    if (isSurahDetailPage || isParahListPage) {
+      return false;
+    }
+    
+    // Hide on the main Surah list page because it has an integrated header card player
+    if (activeTab === 'home' && !selectedSurah && homeView === 'surahs') {
+        return false;
+    }
+
+    // Show on other tabs like Bookmarks, Search
+    return true;
+  }, [activeTab, selectedSurah, homeView, playingSurah, playbackState.status]);
 
   // --- Render Logic ---
   const renderContent = () => {
