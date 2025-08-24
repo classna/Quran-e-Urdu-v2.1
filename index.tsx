@@ -111,7 +111,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":55,"name":"سُورَةُ ٱلرَّحْمَٰن","englishName":"Ar-Rahmaan","englishNameTranslation":"The Beneficent","numberOfAyahs":78,"revelationType":"Medinan"},
     {"number":56,"name":"سُورَةُ ٱلْوَاقِعَةِ","englishName":"Al-Waaqia","englishNameTranslation":"The Inevitable","numberOfAyahs":96,"revelationType":"Meccan"},
     {"number":57,"name":"سُورَةُ ٱلْحَدِيدِ","englishName":"Al-Hadid","englishNameTranslation":"The Iron","numberOfAyahs":29,"revelationType":"Medinan"},
-    {"number":58,"name":"سُورَةُ ٱلْمُجَادِلَةِ","englishName":"Al-Mujaadila","englishNameTranslation":"The Pleading Woman","numberOfAyahs":22,"revelationType":"Medinan"},
+    {"number":58,"name":"سُورَةُ ٱلْْمُجَادِلَةِ","englishName":"Al-Mujaadila","englishNameTranslation":"The Pleading Woman","numberOfAyahs":22,"revelationType":"Medinan"},
     {"number":59,"name":"سُورَةُ ٱلْحَشْرِ","englishName":"Al-Hashr","englishNameTranslation":"The Exile","numberOfAyahs":24,"revelationType":"Medinan"},
     {"number":60,"name":"سُورَةُ ٱلْمُمْتَحَنَةِ","englishName":"Al-Mumtahana","englishNameTranslation":"She that is to be examined","numberOfAyahs":13,"revelationType":"Medinan"},
     {"number":61,"name":"سُورَةُ ٱلصَّفِّ","englishName":"As-Saff","englishNameTranslation":"The Ranks","numberOfAyahs":14,"revelationType":"Medinan"},
@@ -147,7 +147,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":91,"name":"سُورَةُ ٱلْشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
     {"number":92,"name":"سُورَةُ ٱللَّيْلِ","englishName":"Al-Lail","englishNameTranslation":"The Night","numberOfAyahs":21,"revelationType":"Meccan"},
     {"number":93,"name":"سُورَةُ ٱلضُّحَىٰ","englishName":"Ad-Dhuhaa","englishNameTranslation":"The Morning Hours","numberOfAyahs":11,"revelationType":"Meccan"},
-    {"number":94,"name":"سُورَةُ ٱلشَّרْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
+    {"number":94,"name":"سُورَةُ ٱلشَّرْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
     {"number":95,"name":"سُورَةُ ٱلتِّينِ","englishName":"At-Tin","englishNameTranslation":"The Fig","numberOfAyahs":8,"revelationType":"Meccan"},
     {"number":96,"name":"سُورَةُ ٱلْعَلَقِ","englishName":"Al-Alaq","englishNameTranslation":"The Clot","numberOfAyahs":19,"revelationType":"Meccan"},
     {"number":97,"name":"سُورَةُ ٱلْقَدْرِ","englishName":"Al-Qadr","englishNameTranslation":"The Power, Fate","numberOfAyahs":5,"revelationType":"Meccan"},
@@ -438,34 +438,38 @@ const VerseCard = React.memo(({ verse, settings, onPlay, onBookmark, isBookmarke
     );
 });
 
-
-const StickyPlayer = ({ surah, status, onTogglePlay, onNavigate, currentVerseInSurah, onClose }) => (
-  <div className="p-4 sticky top-16 z-30 animate-fadeInDown">
-    <div onClick={onNavigate} className="card p-4 themed-gradient text-white relative overflow-hidden cursor-pointer flex items-center justify-between">
-      <button 
-        onClick={(e) => { e.stopPropagation(); onClose(); }}
-        className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white z-20 transition-colors"
-        aria-label="Stop playback"
-      >
-        <CloseIcon className="w-4 h-4" />
-      </button>
-      <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/10 rounded-full"></div>
-      <div className="relative z-10 flex-1 min-w-0">
-          <p className="font-semibold text-sm opacity-80 mb-1">NOW PLAYING</p>
-          <h3 className="text-xl font-bold font-poppins truncate">{surah.englishName}</h3>
-          <p className="opacity-90">
-            {currentVerseInSurah ? (status === 'playing' ? `Playing Verse ${currentVerseInSurah}` : `Paused at Verse ${currentVerseInSurah}`) : (status === 'playing' ? 'Playing...' : 'Paused')}
-          </p>
-      </div>
+const PlayerCard = ({ surah, status, onTogglePlay, onNavigate, currentVerseInSurah, onClose }) => (
+  <div 
+    onClick={onNavigate} 
+    className="card p-4 themed-gradient text-white relative overflow-hidden cursor-pointer flex items-center justify-between"
+  >
+    <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/10 rounded-full"></div>
+    <div className="relative z-10 flex-1 min-w-0">
+        <p className="font-semibold text-sm opacity-80 mb-1">NOW PLAYING</p>
+        <h3 className="text-xl font-bold font-poppins truncate">{surah.englishName}</h3>
+        <p className="opacity-90">
+          {currentVerseInSurah ? (status === 'playing' ? `Playing Verse ${currentVerseInSurah}` : `Paused at Verse ${currentVerseInSurah}`) : (status === 'playing' ? 'Playing...' : 'Paused')}
+        </p>
+    </div>
+    <div className="relative z-10 flex items-center space-x-2 ml-4 flex-shrink-0">
       <button
         onClick={(e) => { e.stopPropagation(); onTogglePlay(); }}
-        className="w-12 h-12 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white flex-shrink-0 z-10 ml-4 transition-colors"
+        className="w-10 h-10 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white transition-colors"
+        aria-label={status === 'playing' ? 'Pause' : 'Play'}
       >
-        {status === 'playing' ? <PauseIcon className="w-6 h-6" /> : <PlayIcon className="w-6 h-6 ml-0.5" />}
+        {status === 'playing' ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5 ml-0.5" />}
       </button>
+       <button 
+          onClick={(e) => { e.stopPropagation(); onClose(); }}
+          className="w-10 h-10 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white transition-colors"
+          aria-label="Stop playback and close player"
+        >
+          <CloseIcon className="w-5 h-5" />
+        </button>
     </div>
   </div>
 );
+
 
 const ConfirmationModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
   if (!isOpen) return null;
@@ -496,32 +500,9 @@ const ConfirmationModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
 
 
 // --- SCREENS ---
-const HomeHeaderCard = ({ playbackState, lastRead, onContinueReading, playingSurah, onTogglePlay, onNavigateToPlayer, currentVerseInSurah }) => {
-    const isPlayingOrPaused = playbackState.status === 'playing' || playbackState.status === 'paused';
-    const showContinueReading = lastRead && playbackState.status === 'stopped';
-
+const HomeHeaderCard = ({ lastRead, onContinueReading }) => {
     let content;
-    if (isPlayingOrPaused && playingSurah) {
-        content = (
-            <div className="relative z-10 w-full cursor-pointer" onClick={onNavigateToPlayer}>
-                <div className="flex items-center justify-between">
-                    <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-sm opacity-80 mb-1">NOW PLAYING</p>
-                        <h3 className="text-2xl font-bold font-poppins truncate">{playingSurah.englishName}</h3>
-                        <p className="opacity-90">
-                            {currentVerseInSurah ? (playbackState.status === 'playing' ? `Playing Verse ${currentVerseInSurah}` : `Paused at Verse ${currentVerseInSurah}`) : (playbackState.status === 'playing' ? 'Playing...' : 'Paused')}
-                        </p>
-                    </div>
-                    <button
-                        onClick={(e) => { e.stopPropagation(); onTogglePlay(); }}
-                        className="w-14 h-14 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white flex-shrink-0 z-10 ml-4 transition-colors"
-                    >
-                        {playbackState.status === 'playing' ? <PauseIcon className="w-7 h-7" /> : <PlayIcon className="w-7 h-7 ml-1" />}
-                    </button>
-                </div>
-            </div>
-        );
-    } else if (showContinueReading) {
+    if (lastRead) {
         content = (
             <div className="relative z-10 cursor-pointer" onClick={onContinueReading}>
                 <p className="font-semibold text-sm opacity-80 mb-1">CONTINUE READING</p>
@@ -547,85 +528,69 @@ const HomeHeaderCard = ({ playbackState, lastRead, onContinueReading, playingSur
 };
 
 const SurahList = ({ surahs, settings, onSurahSelect, onPlaySurah, playbackState }) => (
-  <div>
-    <div className="space-y-3">
-      {surahs.map((surah, index) => (
-        <div key={surah.number} className="card p-4 flex items-center space-x-4 animate-slideInUp" style={{ animationDelay: `${index * 0.02}s` }}>
-          <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] rounded-full font-bold themed-gradient-text">
-            {surah.number}
-          </div>
-          <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onSurahSelect(surah)}>
-            <div className="flex justify-between items-center">
-              <div>
-                <h4 className="font-bold font-poppins truncate">{surah.englishName}</h4>
-                <p className="text-sm text-[var(--color-text-secondary)]">{surah.englishNameTranslation}</p>
-              </div>
-              <p className={`font-${settings.arabicFont} text-xl`}>{surah.name}</p>
-            </div>
-          </div>
-          <button onClick={() => onPlaySurah(surah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
-            {playbackState.surahNumber === surah.number && playbackState.status === 'playing' ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
-          </button>
+  <div className="space-y-3">
+    {surahs.map((surah, index) => (
+      <div key={surah.number} className="card p-4 flex items-center space-x-4 animate-slideInUp" style={{ animationDelay: `${index * 0.02}s` }}>
+        <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] rounded-full font-bold themed-gradient-text">
+          {surah.number}
         </div>
-      ))}
-    </div>
+        <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onSurahSelect(surah)}>
+          <div className="flex justify-between items-center">
+            <div>
+              <h4 className="font-bold font-poppins truncate">{surah.englishName}</h4>
+              <p className="text-sm text-[var(--color-text-secondary)]">{surah.englishNameTranslation}</p>
+            </div>
+            <p className={`font-${settings.arabicFont} text-xl`}>{surah.name}</p>
+          </div>
+        </div>
+        <button onClick={() => onPlaySurah(surah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
+          {playbackState.surahNumber === surah.number && playbackState.status === 'playing' ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
+        </button>
+      </div>
+    ))}
   </div>
 );
 
 const ParahList = ({ parahs, onParahSelect, onPlayParah, settings, surahData, playbackState, playbackContext }) => (
-    <div>
-        <div className="space-y-3">
-            {parahs.map((parah, index) => {
-                const startingSurah = surahData.find(s => s.number === parah.startingSurahNumber);
-                if (!startingSurah) return null;
+    <div className="space-y-3">
+        {parahs.map((parah, index) => {
+            const startingSurah = surahData.find(s => s.number === parah.startingSurahNumber);
+            if (!startingSurah) return null;
 
-                const isThisParahPlaying = playbackContext?.type === 'parah' && playbackContext.data.number === parah.number && playbackState.status === 'playing';
+            const isThisParahPlaying = playbackContext?.type === 'parah' && playbackContext.data.number === parah.number && playbackState.status === 'playing';
 
-                return (
-                    <div
-                        key={parah.number}
-                        className="card p-4 flex items-center space-x-4 animate-slideInUp"
-                        style={{ animationDelay: `${index * 0.02}s` }}
-                    >
-                        <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] rounded-full font-bold themed-gradient-text">
-                            {parah.number}
-                        </div>
-                        <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onParahSelect(parah)}>
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <h4 className="font-bold font-poppins truncate">{parah.name}</h4>
-                                    <p className="text-sm text-[var(--color-text-secondary)]">
-                                        {startingSurah.englishName}, Verse {parah.startingVerseNumber}
-                                    </p>
-                                </div>
-                                <p className={`font-${settings.arabicFont} text-xl`}>{parah.arabicName}</p>
-                            </div>
-                        </div>
-                         <button onClick={() => onPlayParah(parah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
-                           {isThisParahPlaying ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
-                        </button>
+            return (
+                <div
+                    key={parah.number}
+                    className="card p-4 flex items-center space-x-4 animate-slideInUp"
+                    style={{ animationDelay: `${index * 0.02}s` }}
+                >
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] rounded-full font-bold themed-gradient-text">
+                        {parah.number}
                     </div>
-                );
-            })}
-        </div>
+                    <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onParahSelect(parah)}>
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h4 className="font-bold font-poppins truncate">{parah.name}</h4>
+                                <p className="text-sm text-[var(--color-text-secondary)]">
+                                    {startingSurah.englishName}, Verse {parah.startingVerseNumber}
+                                </p>
+                            </div>
+                            <p className={`font-${settings.arabicFont} text-xl`}>{parah.arabicName}</p>
+                        </div>
+                    </div>
+                     <button onClick={() => onPlayParah(parah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
+                       {isThisParahPlaying ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
+                    </button>
+                </div>
+            );
+        })}
     </div>
 );
 
-const HomeScreen = ({ homeView, surahs, parahs, settings, onSurahSelect, onParahSelect, onPlaySurah, onPlayParah, playbackState, playbackContext, lastRead, onContinueReading, playingSurah, onTogglePlay, onNavigateToPlayer, currentVerseInSurah }) => {
+const HomeScreen = ({ homeView, surahs, parahs, settings, onSurahSelect, onParahSelect, onPlaySurah, onPlayParah, playbackState, playbackContext }) => {
   return (
-    <div className="p-4 space-y-6">
-      {homeView === 'surahs' && (
-        <HomeHeaderCard 
-          playbackState={playbackState}
-          lastRead={lastRead}
-          onContinueReading={onContinueReading}
-          playingSurah={playingSurah}
-          onTogglePlay={onTogglePlay}
-          onNavigateToPlayer={onNavigateToPlayer}
-          currentVerseInSurah={currentVerseInSurah}
-        />
-      )}
-      
+    <div className="p-4">
       {homeView === 'surahs' ? (
         <SurahList
           surahs={surahs}
@@ -1460,28 +1425,18 @@ const QuranApp = () => {
   }, [playbackState.status, playbackState.currentVerseGlobal, verses, lastReadWithData]);
 
 
-  const isPlayerUiVisible = useMemo(() => {
-    if (playbackState.status === 'stopped' || !playingSurah) return false;
-    
-    // Always hide on settings screen
-    if (activeTab === 'settings') return false;
+  const showPlayerCard = useMemo(() => {
+    const isPlayingOrPaused = playbackState.status === 'playing' || playbackState.status === 'paused';
+    if (!isPlayingOrPaused || !playingSurah) return false;
 
-    // Determine if we are on a page where the player should be hidden
-    const isSurahDetailPage = activeTab === 'home' && selectedSurah;
-    const isParahListPage = activeTab === 'home' && !selectedSurah && homeView === 'parah';
-
-    if (isSurahDetailPage || isParahListPage) {
-      return false;
-    }
-    
-    // Hide on the main Surah list page because it has an integrated header card player
-    if (activeTab === 'home' && !selectedSurah && homeView === 'surahs') {
+    // Hide on settings and surah detail screens
+    if (activeTab === 'settings' || selectedSurah) {
         return false;
     }
 
-    // Show on other tabs like Bookmarks, Search
+    // Show on home (surah/parah list), bookmarks, search
     return true;
-  }, [activeTab, selectedSurah, homeView, playingSurah, playbackState.status]);
+  }, [playbackState.status, playingSurah, activeTab, selectedSurah]);
 
   // --- Render Logic ---
   const renderContent = () => {
@@ -1501,12 +1456,6 @@ const QuranApp = () => {
           onPlayParah={handlePlayParah}
           playbackState={playbackState}
           playbackContext={playbackContext}
-          lastRead={lastReadWithData} 
-          onContinueReading={handleContinueReading} 
-          playingSurah={playingSurah}
-          onTogglePlay={handleTogglePlayPause}
-          onNavigateToPlayer={handleNavigateToPlayer}
-          currentVerseInSurah={currentVerseInSurahForPlayer}
       />;
       case 'bookmarks': return <BookmarksScreen bookmarks={bookmarks} onBookmarkSelect={handleBookmarkSelect} onDeleteBookmark={handleDeleteBookmark} settings={settings} />;
       case 'search': return <SearchScreen />;
@@ -1521,13 +1470,7 @@ const QuranApp = () => {
           onPlaySurah={handlePlaySurah} 
           onPlayParah={handlePlayParah}
           playbackState={playbackState}
-          playbackContext={playbackContext} 
-          lastRead={lastReadWithData} 
-          onContinueReading={handleContinueReading} 
-          playingSurah={playingSurah}
-          onTogglePlay={handleTogglePlayPause}
-          onNavigateToPlayer={handleNavigateToPlayer}
-          currentVerseInSurah={currentVerseInSurahForPlayer}
+          playbackContext={playbackContext}
       />;
     }
   };
@@ -1568,18 +1511,27 @@ const QuranApp = () => {
         )}
       </Header>
 
-      {isPlayerUiVisible &&
-        <StickyPlayer
-          surah={playingSurah}
-          status={playbackState.status}
-          onTogglePlay={handleTogglePlayPause}
-          onNavigate={handleNavigateToPlayer}
-          currentVerseInSurah={currentVerseInSurahForPlayer}
-          onClose={stopPlayback}
-        />
-      }
-
       <main className="pb-24">
+        {showPlayerCard && playingSurah ? (
+            <div className="p-4 animate-fadeInDown">
+                <PlayerCard
+                    surah={playingSurah}
+                    status={playbackState.status}
+                    onTogglePlay={handleTogglePlayPause}
+                    onNavigate={handleNavigateToPlayer}
+                    currentVerseInSurah={currentVerseInSurahForPlayer}
+                    onClose={stopPlayback}
+                />
+            </div>
+        ) : activeTab === 'home' && !selectedSurah && homeView === 'surahs' ? (
+             <div className="p-4">
+                <HomeHeaderCard 
+                    lastRead={lastReadWithData}
+                    onContinueReading={handleContinueReading}
+                />
+            </div>
+        ) : null}
+        
         {renderContent()}
       </main>
       
