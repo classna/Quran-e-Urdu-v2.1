@@ -283,6 +283,13 @@ body {
 .arabic-text {
   font-size: var(--arabic-font-size);
   line-height: var(--arabic-line-height);
+  /* Enhanced Arabic rendering for ligatures and diacritics */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures contextual;
+  font-feature-settings: "calt" 1, "liga" 1;
 }
 .translation-text {
   font-size: var(--translation-font-size);
@@ -299,6 +306,13 @@ body {
   font-family: 'me_quran', serif;
   color: #ffffff;
   opacity: 0.9;
+  /* Enhanced Arabic rendering for ligatures and diacritics */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures contextual;
+  font-feature-settings: "calt" 1, "liga" 1;
 }
 
 /* Sliders */

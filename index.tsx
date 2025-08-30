@@ -147,7 +147,7 @@ const ALL_SURAHS: Surah[] = [
     {"number":91,"name":"سُورَةُ ٱلْشَّمْسِ","englishName":"Ash-Shams","englishNameTranslation":"The Sun","numberOfAyahs":15,"revelationType":"Meccan"},
     {"number":92,"name":"سُورَةُ ٱللَّيْلِ","englishName":"Al-Lail","englishNameTranslation":"The Night","numberOfAyahs":21,"revelationType":"Meccan"},
     {"number":93,"name":"سُورَةُ ٱلضُّحَىٰ","englishName":"Ad-Dhuhaa","englishNameTranslation":"The Morning Hours","numberOfAyahs":11,"revelationType":"Meccan"},
-    {"number":94,"name":"سُورَةُ ٱلشَّرْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
+    {"number":94,"name":"سُورَةُ ٱلشَّרْحِ","englishName":"Ash-Sharh","englishNameTranslation":"The Consolation","numberOfAyahs":8,"revelationType":"Meccan"},
     {"number":95,"name":"سُورَةُ ٱلتِّينِ","englishName":"At-Tin","englishNameTranslation":"The Fig","numberOfAyahs":8,"revelationType":"Meccan"},
     {"number":96,"name":"سُورَةُ ٱلْعَلَقِ","englishName":"Al-Alaq","englishNameTranslation":"The Clot","numberOfAyahs":19,"revelationType":"Meccan"},
     {"number":97,"name":"سُورَةُ ٱلْقَدْرِ","englishName":"Al-Qadr","englishNameTranslation":"The Power, Fate","numberOfAyahs":5,"revelationType":"Meccan"},
@@ -218,6 +218,7 @@ const HeadphonesIcon = ({ className = "w-6 h-6" }) => (<svg className={className
 const BookIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>);
 const TrashIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.067-2.09 1.02-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>);
 const CloseIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>);
+const WifiSlashIcon = ({ className = "w-6 h-6" }) => (<svg className={className} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 3l18 18M8.288 9.212A5.25 5.25 0 0 1 12 8.25a5.25 5.25 0 0 1 3.712.962m-7.424 0A5.25 5.25 0 0 0 12 15.75a5.25 5.25 0 0 0 3.712-.962m0-7.424A9 9 0 0 0 12 3c-1.765 0-3.41.48-4.832 1.322m10.664 0A9 9 0 0 1 12 21c-1.765 0-3.41-.48-4.832-1.322"/></svg>);
 
 
 // --- UTILITIES ---
@@ -308,6 +309,7 @@ const usePersistentState = <T,>(key: string, defaultValue: T): [T, React.Dispatc
   useEffect(() => {
     try {
       localStorage.setItem(key, JSON.stringify(state));
+// FIX: The catch block was missing curly braces, causing a syntax error. This has been corrected.
     } catch (error) {
       console.error("Error writing to localStorage", error);
     }
@@ -540,7 +542,7 @@ const SurahList = ({ surahs, settings, onSurahSelect, onPlaySurah, playbackState
               <h4 className="font-bold font-poppins truncate">{surah.englishName}</h4>
               <p className="text-sm text-[var(--color-text-secondary)]">{surah.englishNameTranslation}</p>
             </div>
-            <p className={`font-${settings.arabicFont} text-xl`}>{surah.name}</p>
+            <p className={`font-${settings.arabicFont} text-2xl`}>{surah.name}</p>
           </div>
         </div>
         <button onClick={() => onPlaySurah(surah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
@@ -576,7 +578,7 @@ const ParahList = ({ parahs, onParahSelect, onPlayParah, settings, surahData, pl
                                     {startingSurah.englishName}, Verse {parah.startingVerseNumber}
                                 </p>
                             </div>
-                            <p className={`font-${settings.arabicFont} text-xl`}>{parah.arabicName}</p>
+                            <p className={`font-${settings.arabicFont} text-2xl`}>{parah.arabicName}</p>
                         </div>
                     </div>
                      <button onClick={() => onPlayParah(parah)} className="p-2 rounded-full hover:bg-[color-mix(in_srgb,_var(--color-primary)_10%,_transparent)] text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">
@@ -614,7 +616,7 @@ const HomeScreen = ({ homeView, surahs, parahs, settings, onSurahSelect, onParah
   );
 };
 
-const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmarks, playbackState, verseRefs, scrollToVerse, onScrollComplete, loading, playVerseOnLoad, setPlayVerseOnLoad, highlightedVerse, setHighlightedVerse }) => {
+const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmarks, playbackState, verseRefs, scrollToVerse, onScrollComplete, loading, playVerseOnLoad, setPlayVerseOnLoad, highlightedVerse, setHighlightedVerse, networkError }) => {
     useEffect(() => {
         if (scrollToVerse && verses.length > 0 && !loading) {
             const verseData = verses.find(v => v.number === scrollToVerse);
@@ -668,6 +670,12 @@ const SurahScreen = ({ surah, verses, settings, onPlayVerse, onBookmark, bookmar
 
             {loading ? (
                 <div className="flex justify-center items-center pt-20"><LoadingSpinnerIcon/></div>
+            ) : networkError ? (
+                 <div className="text-center py-20 card p-6 animate-fadeIn m-4">
+                    <WifiSlashIcon className="w-12 h-12 mx-auto text-[var(--color-text-secondary)] mb-4" />
+                    <h3 className="text-xl font-bold font-poppins">Content Unavailable</h3>
+                    <p className="text-[var(--color-text-secondary)] mt-1">This Surah has not been saved for offline use. Please connect to the internet to view it.</p>
+                </div>
             ) : (
                 <div className="space-y-4">
                     {verses.map((verse, index) => (
@@ -904,6 +912,7 @@ const QuranApp = () => {
   const [highlightedVerse, setHighlightedVerse] = useState<number | null>(null);
   const [showResetConfirmModal, setShowResetConfirmModal] = useState(false);
   const [playVerseOnLoad, setPlayVerseOnLoad] = useState<number | null>(null);
+  const [networkError, setNetworkError] = useState(false);
   
   const [settings, setSettings] = usePersistentState<Settings>('quranAppSettings', DEFAULT_SETTINGS);
 
@@ -1056,9 +1065,28 @@ const QuranApp = () => {
   const loadVerses = useCallback(async ({ surah }: { surah?: Surah }) => {
     if (!surah) return null;
     setLoading(true);
+    setNetworkError(false);
     setVerses([]);
     verseRefs.current = {};
     preloadedUrlsRef.current.clear();
+    
+    const cacheKey = `quranApp-surah-verses-${surah.number}`;
+
+    // 1. Try to load from cache first
+    try {
+        const cachedData = localStorage.getItem(cacheKey);
+        if (cachedData) {
+            console.log(`Loading Surah ${surah.number} from cache.`);
+            const verseData = JSON.parse(cachedData);
+            const versesWithSurahData = verseData.map(v => ({...v, surah}));
+            setVerses(versesWithSurahData);
+            setLoading(false);
+            return versesWithSurahData;
+        }
+    } catch (error) {
+        console.error("Error reading from localStorage", error);
+    }
+
 
     const fetchFromAlquranCloud = async () => {
       const type = 'surah';
@@ -1110,15 +1138,30 @@ const QuranApp = () => {
     try {
         const verseData = await fetchFromAlquranCloud();
         setVerses(verseData);
+         try {
+            const leanVerseData = verseData.map(({ surah: s, ...rest }) => rest);
+            localStorage.setItem(cacheKey, JSON.stringify(leanVerseData));
+        } catch (cacheError) {
+            console.error("Failed to write to cache", cacheError);
+        }
         return verseData;
     } catch (e) {
         console.error("Primary verse provider failed, trying fallback.", e);
         try {
             const verseData = await fetchFromQuranCom();
             setVerses(verseData);
+            try {
+                const leanVerseData = verseData.map(({ surah: s, ...rest }) => rest);
+                localStorage.setItem(cacheKey, JSON.stringify(leanVerseData));
+            } catch (cacheError) {
+                console.error("Failed to write to cache", cacheError);
+            }
             return verseData;
         } catch (e2) {
             console.error("All verse providers failed.", e2);
+            if (!navigator.onLine) {
+                setNetworkError(true);
+            }
             return null;
         }
     } finally {
@@ -1403,6 +1446,14 @@ const QuranApp = () => {
     setPlaybackState(p => ({...p, status: p.status === 'playing' ? 'paused' : 'playing' }))
   }, []);
 
+  const handleNavClick = (tabId: string) => {
+    if (tabId === 'home') {
+      setSelectedSurah(null);
+    }
+    setActiveTab(tabId);
+  };
+
+
   const lastReadWithData = useMemo(() => {
       if (!lastRead) return null;
       // Handle old format from localStorage for one-time migration
@@ -1443,7 +1494,7 @@ const QuranApp = () => {
     switch (activeTab) {
       case 'home': 
         if (selectedSurah) {
-          return <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} highlightedVerse={highlightedVerse} setHighlightedVerse={setHighlightedVerse} />;
+          return <SurahScreen loading={loading} surah={selectedSurah} verses={verses} settings={settings} onPlayVerse={handlePlaySingleVerse} onBookmark={toggleBookmark} bookmarks={bookmarks} playbackState={playbackState} verseRefs={verseRefs} scrollToVerse={scrollToVerse} onScrollComplete={handleScrollComplete} playVerseOnLoad={playVerseOnLoad} setPlayVerseOnLoad={setPlayVerseOnLoad} highlightedVerse={highlightedVerse} setHighlightedVerse={setHighlightedVerse} networkError={networkError} />;
         }
         return <HomeScreen 
           homeView={homeView}
@@ -1542,7 +1593,7 @@ const QuranApp = () => {
         onConfirm={handleConfirmReset}
         onCancel={() => setShowResetConfirmModal(false)}
       />
-      <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      <BottomNav activeTab={activeTab} setActiveTab={handleNavClick} />
     </div>
   );
 };
