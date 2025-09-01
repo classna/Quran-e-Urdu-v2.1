@@ -22,8 +22,6 @@ interface Parah {
     arabicName: string;
     startingSurahNumber: number;
     startingVerseNumber: number;
-    endingSurahNumber: number;
-    endingVerseNumber: number;
 }
 
 interface Verse {
@@ -174,36 +172,36 @@ const ALL_SURAHS: Surah[] = [
 
 // --- STATIC PARAH DATA ---
 const ALL_PARAHS: Parah[] = [
-    { number: 1, name: "Alif-Lam-Mim", englishName: "Juz' 1", arabicName: "الم", startingSurahNumber: 1, startingVerseNumber: 1, endingSurahNumber: 2, endingVerseNumber: 141 },
-    { number: 2, name: "Sayaqūl", englishName: "Juz' 2", arabicName: "سَيَقُولُ", startingSurahNumber: 2, startingVerseNumber: 142, endingSurahNumber: 2, endingVerseNumber: 252 },
-    { number: 3, name: "Tilka -r-Rusul", englishName: "Juz' 3", arabicName: "تِلْكَ الرُّسُلُ", startingSurahNumber: 2, startingVerseNumber: 253, endingSurahNumber: 3, endingVerseNumber: 91 },
-    { number: 4, name: "Lan Tanālū", englishName: "Juz' 4", arabicName: "لَنْ تَنَالُوا", startingSurahNumber: 3, startingVerseNumber: 92, endingSurahNumber: 4, endingVerseNumber: 23 },
-    { number: 5, name: "Wa-l-Muḥṣanāt", englishName: "Juz' 5", arabicName: "وَالْمُحْصَنَاتُ", startingSurahNumber: 4, startingVerseNumber: 24, endingSurahNumber: 4, endingVerseNumber: 147 },
-    { number: 6, name: "Lā Yuḥibbu-llāh", englishName: "Juz' 6", arabicName: "لَا يُحِبُّ اللَّهُ", startingSurahNumber: 4, startingVerseNumber: 148, endingSurahNumber: 5, endingVerseNumber: 82 },
-    { number: 7, name: "Wa Idhā Samiʿū", englishName: "Juz' 7", arabicName: "وَإِذَا سَمِعُوا", startingSurahNumber: 5, startingVerseNumber: 83, endingSurahNumber: 6, endingVerseNumber: 110 },
-    { number: 8, name: "Wa-law Annanā", englishName: "Juz' 8", arabicName: "وَلَوْ أَنَّنَا", startingSurahNumber: 6, startingVerseNumber: 111, endingSurahNumber: 7, endingVerseNumber: 87 },
-    { number: 9, name: "Qāla-l-Mala'", englishName: "Juz' 9", arabicName: "قَالَ الْمَلَأُ", startingSurahNumber: 7, startingVerseNumber: 88, endingSurahNumber: 8, endingVerseNumber: 40 },
-    { number: 10, name: "Wa-ʿlamū", englishName: "Juz' 10", arabicName: "وَاعْلَمُوا", startingSurahNumber: 8, startingVerseNumber: 41, endingSurahNumber: 9, endingVerseNumber: 93 },
-    { number: 11, name: "Yaʿtadhirūn", englishName: "Juz' 11", arabicName: "يَعْتَذِرُونَ", startingSurahNumber: 9, startingVerseNumber: 94, endingSurahNumber: 11, endingVerseNumber: 5 },
-    { number: 12, name: "Wa-mā Min Dābbah", englishName: "Juz' 12", arabicName: "وَمَا مِنْ دَابَّةٍ", startingSurahNumber: 11, startingVerseNumber: 6, endingSurahNumber: 12, endingVerseNumber: 52 },
-    { number: 13, name: "Wa-mā Ubarri'", englishName: "Juz' 13", arabicName: "وَمَا أُبَرِّئُ", startingSurahNumber: 12, startingVerseNumber: 53, endingSurahNumber: 14, endingVerseNumber: 52 },
-    { number: 14, name: "Rubamā", englishName: "Juz' 14", arabicName: "رُبَمَا", startingSurahNumber: 15, startingVerseNumber: 1, endingSurahNumber: 16, endingVerseNumber: 128 },
-    { number: 15, name: "Subḥāna-lladhī", englishName: "Juz' 15", arabicName: "سُبْحَانَ الَّذِي", startingSurahNumber: 17, startingVerseNumber: 1, endingSurahNumber: 18, endingVerseNumber: 74 },
-    { number: 16, name: "Qāla Alam", englishName: "Juz' 16", arabicName: "قَالَ أَلَمْ", startingSurahNumber: 18, startingVerseNumber: 75, endingSurahNumber: 20, endingVerseNumber: 135 },
-    { number: 17, name: "Iqtaraba li-n-Nās", englishName: "Juz' 17", arabicName: "اقْتَرَبَ لِلنَّاسِ", startingSurahNumber: 21, startingVerseNumber: 1, endingSurahNumber: 22, endingVerseNumber: 78 },
-    { number: 18, name: "Qad Aflaḥa", englishName: "Juz' 18", arabicName: "قَدْ أَفْلَحَ", startingSurahNumber: 23, startingVerseNumber: 1, endingSurahNumber: 25, endingVerseNumber: 20 },
-    { number: 19, name: "Wa-qāla-lladhīna", englishName: "Juz' 19", arabicName: "وَقَالَ الَّذِينَ", startingSurahNumber: 25, startingVerseNumber: 21, endingSurahNumber: 27, endingVerseNumber: 59 },
-    { number: 20, name: "Amman Khalaqa", englishName: "Juz' 20", arabicName: "أَمَّنْ خَلَقَ", startingSurahNumber: 27, startingVerseNumber: 60, endingSurahNumber: 29, endingVerseNumber: 44 },
-    { number: 21, name: "Utlu Mā Uḥiya", englishName: "Juz' 21", arabicName: "اتْلُ مَا أُوحِيَ", startingSurahNumber: 29, startingVerseNumber: 45, endingSurahNumber: 33, endingVerseNumber: 30 },
-    { number: 22, name: "Wa-man Yaqnut", englishName: "Juz' 22", arabicName: "وَمَنْ يَقْنُتْ", startingSurahNumber: 33, startingVerseNumber: 31, endingSurahNumber: 36, endingVerseNumber: 21 },
-    { number: 23, name: "Wa-mā Liya", englishName: "Juz' 23", arabicName: "وَمَا لِيَ", startingSurahNumber: 36, startingVerseNumber: 22, endingSurahNumber: 39, endingVerseNumber: 31 },
-    { number: 24, name: "Faman Aẓlam", englishName: "Juz' 24", arabicName: "فَمَنْ أَظْلَمُ", startingSurahNumber: 39, startingVerseNumber: 32, endingSurahNumber: 41, endingVerseNumber: 46 },
-    { number: 25, name: "Ilayhi Yurad", englishName: "Juz' 25", arabicName: "إِلَيْهِ يُرَدُّ", startingSurahNumber: 41, startingVerseNumber: 47, endingSurahNumber: 45, endingVerseNumber: 37 },
-    { number: 26, name: "Ḥā-Mĩm", englishName: "Juz' 26", arabicName: "حٰمٓ", startingSurahNumber: 46, startingVerseNumber: 1, endingSurahNumber: 51, endingVerseNumber: 30 },
-    { number: 27, name: "Qāla Fa-mā Khaṭbukum", englishName: "Juz' 27", arabicName: "قَالَ فَمَا خَطْبُكُمْ", startingSurahNumber: 51, startingVerseNumber: 31, endingSurahNumber: 57, endingVerseNumber: 29 },
-    { number: 28, name: "Qad Samiʿa-llāh", englishName: "Juz' 28", arabicName: "قَدْ سَمِعَ اللَّهُ", startingSurahNumber: 58, startingVerseNumber: 1, endingSurahNumber: 66, endingVerseNumber: 12 },
-    { number: 29, name: "Tabāraka-lladhī", englishName: "Juz' 29", arabicName: "تَبَارَكَ الَّذِي", startingSurahNumber: 67, startingVerseNumber: 1, endingSurahNumber: 77, endingVerseNumber: 50 },
-    { number: 30, name: "ʿAmma Yatasā'alūn", englishName: "Juz' 30", arabicName: "عَمَّ يَتَسَاءَلُونَ", startingSurahNumber: 78, startingVerseNumber: 1, endingSurahNumber: 114, endingVerseNumber: 6 },
+    { number: 1, name: "Alif-Lam-Mim", englishName: "Juz' 1", arabicName: "الم", startingSurahNumber: 1, startingVerseNumber: 1 },
+    { number: 2, name: "Sayaqūl", englishName: "Juz' 2", arabicName: "سَيَقُولُ", startingSurahNumber: 2, startingVerseNumber: 142 },
+    { number: 3, name: "Tilka -r-Rusul", englishName: "Juz' 3", arabicName: "تِلْكَ الرُّسُلُ", startingSurahNumber: 2, startingVerseNumber: 253 },
+    { number: 4, name: "Lan Tanālū", englishName: "Juz' 4", arabicName: "لَنْ تَنَالُوا", startingSurahNumber: 3, startingVerseNumber: 92 },
+    { number: 5, name: "Wa-l-Muḥṣanāt", englishName: "Juz' 5", arabicName: "وَالْمُحْصَنَاتُ", startingSurahNumber: 4, startingVerseNumber: 24 },
+    { number: 6, name: "Lā Yuḥibbu-llāh", englishName: "Juz' 6", arabicName: "لَا يُحِبُّ اللَّهُ", startingSurahNumber: 4, startingVerseNumber: 148 },
+    { number: 7, name: "Wa Idhā Samiʿū", englishName: "Juz' 7", arabicName: "وَإِذَا سَمِعُوا", startingSurahNumber: 5, startingVerseNumber: 83 },
+    { number: 8, name: "Wa-law Annanā", englishName: "Juz' 8", arabicName: "وَلَوْ أَنَّنَا", startingSurahNumber: 6, startingVerseNumber: 111 },
+    { number: 9, name: "Qāla-l-Mala'", englishName: "Juz' 9", arabicName: "قَالَ الْمَلَأُ", startingSurahNumber: 7, startingVerseNumber: 88 },
+    { number: 10, name: "Wa-ʿlamū", englishName: "Juz' 10", arabicName: "وَاعْلَمُوا", startingSurahNumber: 8, startingVerseNumber: 41 },
+    { number: 11, name: "Yaʿtadhirūn", englishName: "Juz' 11", arabicName: "يَعْتَذِرُونَ", startingSurahNumber: 9, startingVerseNumber: 94 },
+    { number: 12, name: "Wa-mā Min Dābbah", englishName: "Juz' 12", arabicName: "وَمَا مِنْ دَابَّةٍ", startingSurahNumber: 11, startingVerseNumber: 6 },
+    { number: 13, name: "Wa-mā Ubarri'", englishName: "Juz' 13", arabicName: "وَمَا أُبَرِّئُ", startingSurahNumber: 12, startingVerseNumber: 53 },
+    { number: 14, name: "Rubamā", englishName: "Juz' 14", arabicName: "رُبَمَا", startingSurahNumber: 15, startingVerseNumber: 2 },
+    { number: 15, name: "Subḥāna-lladhī", englishName: "Juz' 15", arabicName: "سُبْحَانَ الَّذِي", startingSurahNumber: 17, startingVerseNumber: 1 },
+    { number: 16, name: "Qāla Alam", englishName: "Juz' 16", arabicName: "قَالَ أَلَمْ", startingSurahNumber: 18, startingVerseNumber: 75 },
+    { number: 17, name: "Iqtaraba li-n-Nās", englishName: "Juz' 17", arabicName: "اقْتَرَبَ لِلنَّاسِ", startingSurahNumber: 21, startingVerseNumber: 1 },
+    { number: 18, name: "Qad Aflaḥa", englishName: "Juz' 18", arabicName: "قَدْ أَفْلَحَ", startingSurahNumber: 23, startingVerseNumber: 1 },
+    { number: 19, name: "Wa-qāla-lladhīna", englishName: "Juz' 19", arabicName: "وَقَالَ الَّذِينَ", startingSurahNumber: 25, startingVerseNumber: 21 },
+    { number: 20, name: "Amman Khalaqa", englishName: "Juz' 20", arabicName: "أَمَّنْ خَلَقَ", startingSurahNumber: 27, startingVerseNumber: 60 },
+    { number: 21, name: "Utlu Mā Uḥiya", englishName: "Juz' 21", arabicName: "اتْلُ مَا أُوحِيَ", startingSurahNumber: 29, startingVerseNumber: 45 },
+    { number: 22, name: "Wa-man Yaqnut", englishName: "Juz' 22", arabicName: "وَمَنْ يَقْنُتْ", startingSurahNumber: 33, startingVerseNumber: 31 },
+    { number: 23, name: "Wa-mā Liya", englishName: "Juz' 23", arabicName: "وَمَا لِيَ", startingSurahNumber: 36, startingVerseNumber: 22 },
+    { number: 24, name: "Faman Aẓlam", englishName: "Juz' 24", arabicName: "فَمَنْ أَظْلَمُ", startingSurahNumber: 39, startingVerseNumber: 32 },
+    { number: 25, name: "Ilayhi Yurad", englishName: "Juz' 25", arabicName: "إِلَيْهِ يُرَدُّ", startingSurahNumber: 41, startingVerseNumber: 47 },
+    { number: 26, name: "Ḥā-Mĩm", englishName: "Juz' 26", arabicName: "حٰمٓ", startingSurahNumber: 46, startingVerseNumber: 1 },
+    { number: 27, name: "Qāla Fa-mā Khaṭbukum", englishName: "Juz' 27", arabicName: "قَالَ فَمَا خَطْبُكُمْ", startingSurahNumber: 51, startingVerseNumber: 31 },
+    { number: 28, name: "Qad Samiʿa-llāh", englishName: "Juz' 28", arabicName: "قَدْ سَمِعَ اللَّهُ", startingSurahNumber: 58, startingVerseNumber: 1 },
+    { number: 29, name: "Tabāraka-lladhī", englishName: "Juz' 29", arabicName: "تَبَارَكَ الَّذِي", startingSurahNumber: 67, startingVerseNumber: 1 },
+    { number: 30, name: "ʿAmma Yatasā'alūn", englishName: "Juz' 30", arabicName: "عَمَّ يَتَسَاءَلُونَ", startingSurahNumber: 78, startingVerseNumber: 1 },
 ];
 
 // --- ICONS ---
@@ -343,8 +341,7 @@ const SegmentedControl = ({ options, activeOption, onOptionClick }) => {
   );
 };
 
-// FIX: Made the `children` prop optional by providing a default value to resolve a TypeScript type error.
-const Header = ({ title, onBack, icon, children = null }) => (
+const Header = ({ title, onBack, icon, children }) => (
   <header className="app-header sticky top-0 z-40 h-16 flex items-center justify-between px-4">
     <div className="flex items-center space-x-2">
       {onBack && (
@@ -922,7 +919,6 @@ const QuranApp = () => {
   const [bookmarks, setBookmarks] = usePersistentState<Bookmark[]>('quranAppBookmarks', []);
   const [lastRead, setLastRead] = usePersistentState<LastRead | null>('quranAppLastRead', null);
 
-  const [playbackPlaylist, setPlaybackPlaylist] = useState<Verse[]>([]);
   const [playbackState, setPlaybackState] = useState({
     surahNumber: null,
     currentVerseIndex: 0,
@@ -1066,56 +1062,82 @@ const QuranApp = () => {
     return map;
   }, [surahs]);
 
-  const fetchAndCacheVersesForSurah = useCallback(async (surah: Surah) => {
+  const loadVerses = useCallback(async ({ surah }: { surah?: Surah }) => {
     if (!surah) return null;
-
+    setLoading(true);
+    setNetworkError(false);
+    setVerses([]);
+    verseRefs.current = {};
+    preloadedUrlsRef.current.clear();
+    
     const cacheKey = `quranApp-surah-verses-${surah.number}`;
 
+    // 1. Try to load from cache first
     try {
         const cachedData = localStorage.getItem(cacheKey);
         if (cachedData) {
+            console.log(`Loading Surah ${surah.number} from cache.`);
             const verseData = JSON.parse(cachedData);
-            return verseData.map((v: Omit<Verse, 'surah'>) => ({...v, surah}));
+            const versesWithSurahData = verseData.map(v => ({...v, surah}));
+            setVerses(versesWithSurahData);
+            setLoading(false);
+            return versesWithSurahData;
         }
     } catch (error) {
         console.error("Error reading from localStorage", error);
     }
 
+
     const fetchFromAlquranCloud = async () => {
+      const type = 'surah';
+      const number = surah.number;
+      
       const [arabicRes, englishRes, urduRes] = await Promise.all([
-        fetch(`https://api.alquran.cloud/v1/surah/${surah.number}/quran-uthmani`),
-        fetch(`https://api.alquran.cloud/v1/surah/${surah.number}/en.asad`),
-        fetch(`https://api.alquran.cloud/v1/surah/${surah.number}/ur.jalandhry`)
+        fetch(`https://api.alquran.cloud/v1/${type}/${number}/quran-uthmani`),
+        fetch(`https://api.alquran.cloud/v1/${type}/${number}/en.asad`),
+        fetch(`https://api.alquran.cloud/v1/${type}/${number}/ur.jalandhry`)
       ]);
       const [arabic, english, urdu] = await Promise.all([arabicRes.json(), englishRes.json(), urduRes.json()]);
+
       if (arabic.code !== 200) throw new Error('Alquran.cloud API failed');
-      return arabic.data.ayahs.map((v, i) => ({ 
+      
+      const combined = arabic.data.ayahs.map((v, i) => ({ 
           ...v, 
           englishTranslation: english.data.ayahs[i]?.text || '', 
           urduTranslation: urdu.data.ayahs[i]?.text || '',
-          surah
+          ...(surah && { surah })
       }));
+      return combined;
     };
 
     const fetchFromQuranCom = async () => {
-        const [arabicRes, englishRes, urduRes] = await Promise.all([
-            fetch(`https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number=${surah.number}`).then(res => res.json()),
-            fetch(`https://api.quran.com/api/v4/quran/translations/21?chapter_number=${surah.number}`).then(res => res.json()), // en.asad
-            fetch(`https://api.quran.com/api/v4/quran/translations/85?chapter_number=${surah.number}`).then(res => res.json()), // ur.jalandhry
-        ]);
-        const startVerse = surahStartVerseMap[surah.number];
-        return arabicRes.verses.map((v, i) => ({
-            number: startVerse + i,
-            numberInSurah: v.id,
-            text: v.text_uthmani,
-            englishTranslation: englishRes.translations[i]?.text || '',
-            urduTranslation: urduRes.translations[i]?.text || '',
-            surah,
-        }));
+        const fetchSurah = async (surahNumber) => {
+            const [arabicRes, englishRes, urduRes] = await Promise.all([
+                fetch(`https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number=${surahNumber}`).then(res => res.json()),
+                fetch(`https://api.quran.com/api/v4/quran/translations/21?chapter_number=${surahNumber}`).then(res => res.json()), // en.asad
+                fetch(`https://api.quran.com/api/v4/quran/translations/85?chapter_number=${surahNumber}`).then(res => res.json()), // ur.jalandhry
+            ]);
+
+            const surahData = surahs.find(s => s.number === surahNumber);
+            if (!surahData) throw new Error(`Surah data for ${surahNumber} not found`);
+
+            const startVerse = surahStartVerseMap[surahNumber];
+            return arabicRes.verses.map((v, i) => ({
+                number: startVerse + i,
+                numberInSurah: v.id,
+                text: v.text_uthmani,
+                englishTranslation: englishRes.translations[i]?.text || '',
+                urduTranslation: urduRes.translations[i]?.text || '',
+                surah: surahData,
+            }));
+        };
+
+        return await fetchSurah(surah.number);
     };
     
     try {
         const verseData = await fetchFromAlquranCloud();
+        setVerses(verseData);
          try {
             const leanVerseData = verseData.map(({ surah: s, ...rest }) => rest);
             localStorage.setItem(cacheKey, JSON.stringify(leanVerseData));
@@ -1127,6 +1149,7 @@ const QuranApp = () => {
         console.error("Primary verse provider failed, trying fallback.", e);
         try {
             const verseData = await fetchFromQuranCom();
+            setVerses(verseData);
             try {
                 const leanVerseData = verseData.map(({ surah: s, ...rest }) => rest);
                 localStorage.setItem(cacheKey, JSON.stringify(leanVerseData));
@@ -1141,28 +1164,10 @@ const QuranApp = () => {
             }
             return null;
         }
+    } finally {
+        setLoading(false);
     }
-  }, [surahStartVerseMap]);
-
-
-  const loadVerses = useCallback(async ({ surah }: { surah?: Surah }) => {
-    if (!surah) return null;
-    setLoading(true);
-    setNetworkError(false);
-    setVerses([]);
-    verseRefs.current = {};
-    preloadedUrlsRef.current.clear();
-    
-    const verseData = await fetchAndCacheVersesForSurah(surah);
-    
-    if(verseData) {
-        setVerses(verseData);
-    }
-
-    setLoading(false);
-    return verseData;
-
-  }, [fetchAndCacheVersesForSurah]);
+  }, [surahs, surahStartVerseMap]);
 
 
   // --- Audio Logic ---
@@ -1174,12 +1179,11 @@ const QuranApp = () => {
     }
     setPlaybackState({ surahNumber: null, currentVerseIndex: 0, currentVerseGlobal: null, status: 'stopped', loadingVerse: null, stage: 'arabic' });
     setPlaybackContext(null);
-    setPlaybackPlaylist([]);
     preloadedUrlsRef.current.clear();
   }, []);
   
   useEffect(() => {
-    const verseToPlay = playbackPlaylist[playbackState.currentVerseIndex];
+    const verseToPlay = verses[playbackState.currentVerseIndex];
 
     if (playbackState.status !== 'playing' || !verseToPlay) {
         if (audioRef.current && !audioRef.current.paused && audioRef.current.src) {
@@ -1201,7 +1205,7 @@ const QuranApp = () => {
     }
 
     for (let i = 1; i <= PRELOAD_COUNT; i++) {
-        const nextVerse = playbackPlaylist[playbackState.currentVerseIndex + i];
+        const nextVerse = verses[playbackState.currentVerseIndex + i];
         if (!nextVerse) break;
 
         const arabicUrl = `https://cdn.alquran.cloud/media/audio/ayah/${settings.qari}/${nextVerse.number}`;
@@ -1247,8 +1251,8 @@ const QuranApp = () => {
                 setPlaybackState(prev => ({ ...prev, stage: 'translation' }));
             } else {
                 const nextVerseIndex = playbackState.currentVerseIndex + 1;
-                if (nextVerseIndex < playbackPlaylist.length) {
-                    const nextVerse = playbackPlaylist[nextVerseIndex];
+                if (nextVerseIndex < verses.length) {
+                    const nextVerse = verses[nextVerseIndex];
                     setPlaybackState(prev => ({ 
                         ...prev, 
                         currentVerseIndex: nextVerseIndex, 
@@ -1286,7 +1290,7 @@ const QuranApp = () => {
     
     verseRefs.current[verseToPlay.number]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  }, [playbackState.status, playbackState.currentVerseIndex, playbackState.stage, playbackPlaylist, settings.qari, settings.translationAudio, stopPlayback, setLastRead, settings.playbackSpeed]);
+  }, [playbackState.status, playbackState.currentVerseIndex, playbackState.stage, verses, settings.qari, settings.translationAudio, stopPlayback, setLastRead, settings.playbackSpeed]);
 
 
   // --- Handlers ---
@@ -1326,39 +1330,11 @@ const QuranApp = () => {
         : await loadVerses({ surah });
     
     if (targetVerses && targetVerses.length > 0) {
-        setPlaybackPlaylist(targetVerses);
         setPlaybackState({ surahNumber: surah.number, currentVerseIndex: 0, status: 'playing', loadingVerse: null, currentVerseGlobal: targetVerses[0].number, stage: 'arabic' });
     }
   };
 
-  const loadParahPlaylist = useCallback(async (parah: Parah) => {
-      let allVersesInScope: Verse[] = [];
-      for (let i = parah.startingSurahNumber; i <= parah.endingSurahNumber; i++) {
-          const surah = ALL_SURAHS.find(s => s.number === i);
-          if (!surah) continue;
-          const surahVerses = await fetchAndCacheVersesForSurah(surah);
-          if (surahVerses) {
-              allVersesInScope.push(...surahVerses);
-          } else {
-              return null; // Fail if any part is missing
-          }
-      }
-
-      return allVersesInScope.filter(verse => {
-          const { number: surahNum } = verse.surah;
-          const { numberInSurah } = verse;
-          if (surahNum > parah.startingSurahNumber && surahNum < parah.endingSurahNumber) return true;
-          if (surahNum === parah.startingSurahNumber && surahNum === parah.endingSurahNumber) {
-              return numberInSurah >= parah.startingVerseNumber && numberInSurah <= parah.endingVerseNumber;
-          }
-          if (surahNum === parah.startingSurahNumber) return numberInSurah >= parah.startingVerseNumber;
-          if (surahNum === parah.endingSurahNumber) return numberInSurah <= parah.endingVerseNumber;
-          return false;
-      });
-  }, [fetchAndCacheVersesForSurah]);
-
-
-  const handlePlayParah = useCallback(async (parah: Parah) => {
+  const handlePlayParah = async (parah: Parah) => {
     if (playbackContext?.type === 'parah' && (playbackContext.data as Parah).number === parah.number) {
         setPlaybackState(p => ({ ...p, status: p.status === 'playing' ? 'paused' : 'playing' }));
         return;
@@ -1366,43 +1342,28 @@ const QuranApp = () => {
 
     stopPlayback();
     setPlaybackContext({ type: 'parah', data: parah });
+
+    const surahToLoad = surahs.find(s => s.number === parah.startingSurahNumber);
+    if (!surahToLoad) return;
     
-    const playlist = await loadParahPlaylist(parah);
+    const targetVerses = await loadVerses({ surah: surahToLoad });
+    handleSurahSelect(surahToLoad, { isNavigation: true });
 
-    if (playlist && playlist.length > 0) {
-        const firstVerse = playlist[0];
-        setPlaybackPlaylist(playlist);
-        setPlaybackState({
-            surahNumber: firstVerse.surah.number,
-            currentVerseIndex: 0,
-            status: 'playing',
-            loadingVerse: null,
-            currentVerseGlobal: firstVerse.number,
-            stage: 'arabic'
-        });
+    if (targetVerses && targetVerses.length > 0) {
+        const startingVerseIndex = targetVerses.findIndex(v => v.numberInSurah === parah.startingVerseNumber);
 
-        const startingSurah = surahs.find(s => s.number === parah.startingSurahNumber);
-        if (startingSurah) {
-            if(selectedSurah?.number !== startingSurah.number) {
-                 loadVerses({ surah: startingSurah });
-            }
-            handleSurahSelect(startingSurah, { isNavigation: true });
-            setScrollToVerse(firstVerse.number);
+        if (startingVerseIndex !== -1) {
+            setPlayVerseOnLoad(targetVerses[startingVerseIndex].number);
         }
-    } else {
-        console.error("Failed to load playlist for Parah", parah.number);
-        stopPlayback(); // Ensure everything is reset
     }
-  }, [playbackContext, stopPlayback, loadParahPlaylist, surahs, selectedSurah, loadVerses]);
+  };
 
   const handlePlaySingleVerse = useCallback((verse: Verse) => {
     const verseIndex = verses.findIndex(v => v.number === verse.number);
     if (verseIndex === -1) return;
 
-    setPlaybackPlaylist(verses);
-
     setPlaybackState(p => {
-        if (p.currentVerseGlobal === verse.number && playbackContext?.type !== 'parah') {
+        if (p.currentVerseGlobal === verse.number) {
             return { ...p, status: p.status === 'playing' ? 'paused' : 'playing' };
         } else {
             if (selectedSurah) {
@@ -1419,7 +1380,7 @@ const QuranApp = () => {
             };
         }
     });
-  }, [verses, selectedSurah, playbackContext]);
+  }, [verses, selectedSurah]);
   
   const toggleBookmark = useCallback((verse: Verse) => {
     const id = `${verse.surah.number}-${verse.numberInSurah}`;
@@ -1507,12 +1468,12 @@ const QuranApp = () => {
   const playingSurah = playbackState.currentVerseGlobal ? surahs.find(s => s.number === playbackState.surahNumber) : null;
   
   const currentVerseInSurahForPlayer = useMemo(() => {
-    if (playbackState.status === 'stopped' || playbackPlaylist.length === 0 || !playbackState.currentVerseGlobal) {
+    if (playbackState.status === 'stopped' || !verses.length || !playbackState.currentVerseGlobal) {
         return lastReadWithData?.verseNumberInSurah;
     }
-    const currentVerseData = playbackPlaylist.find(v => v.number === playbackState.currentVerseGlobal);
+    const currentVerseData = verses.find(v => v.number === playbackState.currentVerseGlobal);
     return currentVerseData?.numberInSurah;
-  }, [playbackState.status, playbackState.currentVerseGlobal, playbackPlaylist, lastReadWithData]);
+  }, [playbackState.status, playbackState.currentVerseGlobal, verses, lastReadWithData]);
 
 
   const showPlayerCard = useMemo(() => {
